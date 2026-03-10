@@ -33,31 +33,22 @@
 
     <main class="page-main">
       <div class="page-inner page-inner-wide">
-        <section class="panel">
-          <div class="panel-header">
-            <div class="panel-header-main">
-              <div class="avatar-circle">
-                <!-- 把你的头像放到 img/avatar.png，会自动显示 -->
+        <section class="panel home-split">
+          <div class="home-left">
+            <div class="home-avatar-wrap">
+              <div class="avatar-circle home-avatar">
                 <img src="img/avatar.png" alt="Avatar of Haoran Zhang" onerror="this.style.display='none';">
               </div>
-              <div>
-                <div class="panel-chip">Robotics · Control · Learning</div>
-                <h1 class="panel-title">Haoran Zhang · DeviatedZHR</h1>
-                <p class="panel-subtitle">
-                  A minimal hub for my robotics work — notes, projects and CV.<br>
-                  <span class="muted">一个尽量简洁的个人主页，用来集中展示我的机器人研究、笔记与简历。</span>
-                </p>
-              </div>
+              <h1 class="home-name">Haoran Zhang · DeviatedZHR</h1>
+              <div class="panel-chip home-chip">Robotics · Control · Learning</div>
+              <p class="home-intro muted">
+                I work on robotic systems, focusing on control, motion planning and reinforcement learning on real hardware.<br><br>
+                机器人系统研究，关注控制、运动规划与强化学习。
+              </p>
             </div>
           </div>
-
-          <p class="page-lead">
-            I work on robotic systems, focusing on control, motion planning and reinforcement
-            learning on real hardware. This site keeps things intentionally simple: a place to
-            browse experiments, read notes, and grab my CV.
-          </p>
-
-          <div class="card-list" style="margin-top:18px;">
+          <div class="home-right">
+            <div class="card-list home-cards">
             <article class="card">
               <div class="card-content">
                 <div class="card-badge-row">
@@ -118,6 +109,7 @@
                 </div>
               </div>
             </article>
+            </div>
           </div>
         </section>
       </div>

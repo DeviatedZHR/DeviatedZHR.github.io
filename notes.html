@@ -5,6 +5,7 @@
   <title>Notes · DeviatedZHR</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 </head>
 
 <body data-theme="dark">
@@ -90,6 +91,8 @@
 
   <!-- Lightweight Markdown renderer -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 
   <script>
     (function () {
@@ -155,6 +158,27 @@
         source: "Markdown",
         highlight: "Example",
       },
+      {
+        id: "quad-kinematics",
+        title: "四足机器人运动学分析",
+        path: "blog/Quadruped_Robot/四足机器人运动学分析.md",
+        tags: ["quadruped", "robotics", "运动学"],
+        source: "Markdown",
+      },
+      {
+        id: "quad-dynamics",
+        title: "四足机器人动力学分析",
+        path: "blog/Quadruped_Robot/四足机器人动力学分析.md",
+        tags: ["quadruped", "dynamics", "动力学"],
+        source: "Markdown",
+      },
+      {
+        id: "quad-jacobian",
+        title: "四足机器人雅可比矩阵静力学",
+        path: "blog/Quadruped_Robot/四足机器人雅可比矩阵静力学.md",
+        tags: ["quadruped", "jacobian", "静力学"],
+        source: "Markdown",
+      },
       // 示例：你可以添加一篇来自语雀导出的文档
       // {
       //   id: "yuque-some-topic",
@@ -216,6 +240,10 @@
           if (cache.has(note.id)) {
             const cached = cache.get(note.id);
             detailInner.innerHTML = cached.html;
+            if (window.renderMathInElement) {
+              const el = detailInner.querySelector(".notes-markdown");
+              if (el) renderMathInElement(el, { delimiters: [{ left: "$$", right: "$$", display: true }, { left: "$", right: "$", display: false }], throwOnError: false });
+            }
             return;
           }
           const res = await fetch(note.path + "?_=" + Date.now());
@@ -223,19 +251,36 @@
             throw new Error("Failed to load: " + res.statusText);
           }
           const text = await res.text();
+          const basePath = note.path.replace(/\/[^/]+$/, "/");
+          const esc = (s) => (s || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+          const renderer = {
+            image(tok) {
+              let href = tok.href ?? tok[0];
+              const title = tok.title ?? tok[1];
+              const alt = tok.text ?? tok[2];
+              if (href && !href.startsWith("http") && !href.startsWith("/")) {
+                href = basePath + href.replace(/^\.\//, "");
+              }
+              return `<img src="${esc(href)}" alt="${esc(alt)}"${title ? ` title="${esc(title)}"` : ""}>`;
+            },
+          };
+          const opts = { gfm: true, breaks: true, renderer };
+          const rawHtml = window.marked ? window.marked.parse(text, opts) : "<pre>" + text.replace(/[&<>]/g, s => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[s])) + "</pre>";
           const html = `
             <h2 class="notes-detail-title">${note.title}</h2>
             <div class="notes-detail-meta muted">
               ${note.source ? `<span class="notes-badge">${note.source}</span>` : ""}
               ${(note.tags && note.tags.length) ? "<span class=\"notes-meta-tags\">" + note.tags.join(" · ") + "</span>" : ""}
             </div>
-            <div class="notes-markdown">
-              ${window.marked ? window.marked.parse(text) : "<pre>" + text.replace(/[&<>]/g, s => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[s])) + "</pre>"}
-            </div>
+            <div class="notes-markdown">${rawHtml}</div>
           `;
 
           cache.set(note.id, { text, html });
           detailInner.innerHTML = html;
+          if (window.renderMathInElement) {
+            const el = detailInner.querySelector(".notes-markdown");
+            if (el) renderMathInElement(el, { delimiters: [{ left: "$$", right: "$$", display: true }, { left: "$", right: "$", display: false }], throwOnError: false });
+          }
         } catch (err) {
           console.error(err);
           detailInner.innerHTML = `<p class="muted">加载失败：${err}</p>`;

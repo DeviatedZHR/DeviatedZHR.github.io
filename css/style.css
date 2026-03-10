@@ -257,6 +257,75 @@ body {
     color: var(--text-muted);
 }
 
+/* Home split layout: left avatar+intro, right modules */
+.home-split {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.8fr);
+    gap: 36px;
+    align-items: start;
+}
+
+.home-left {
+    display: flex;
+    justify-content: center;
+}
+
+.home-avatar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 280px;
+}
+
+.home-avatar-wrap .avatar-circle,
+.home-avatar {
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+}
+
+.home-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 14px 0 8px;
+    letter-spacing: 0.02em;
+}
+
+.home-chip {
+    margin-bottom: 12px;
+}
+
+.home-intro {
+    font-size: 13px;
+    line-height: 1.65;
+    margin: 0;
+}
+
+.home-right {
+    min-width: 0;
+}
+
+.home-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.home-cards .card {
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .home-split {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .home-avatar-wrap {
+        max-width: none;
+    }
+}
+
 /* Avatar next to main title */
 .panel-header-main {
     display: flex;
@@ -887,6 +956,46 @@ body.docsify-root #app {
 .notes-markdown code {
     font-family: Menlo, Monaco, Consolas, "SF Mono", "JetBrains Mono", monospace;
     font-size: 12px;
+}
+
+.notes-markdown table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 12px 0;
+    font-size: 13px;
+}
+
+.notes-markdown th,
+.notes-markdown td {
+    border: 1px solid var(--border-subtle);
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.notes-markdown th {
+    background: rgba(15, 23, 42, 0.6);
+    font-weight: 600;
+}
+
+[data-theme="light"] .notes-markdown th {
+    background: rgba(243, 244, 246, 0.9);
+}
+
+.notes-markdown img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 8px 0;
+}
+
+.notes-markdown .katex {
+    font-size: 1.1em;
+}
+
+.notes-markdown .katex-display {
+    margin: 12px 0;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 /* External link card (WeChat: no iframe, show card + button) */
