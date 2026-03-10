@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -67,7 +67,7 @@
                 <p class="muted">
                   左侧展示的是类似语雀的分组与文档列表：<br>
                   - 可以把语雀导出的 Markdown 放在 <code>blog/</code> 或 <code>notes/</code> 中，并在下方配置中登记；<br>
-                  - 公众号课程笔记（PDF 或图片）可以作为“课程笔记”分组中的条目，点击后在新标签页中打开。
+                  - 专业课程笔记（公众号链接）点击后在新标签页中打开阅读。
                 </p>
               </div>
             </article>
@@ -141,11 +141,75 @@
 
   <script>
     // Blog configuration: Yuque-style folders on the left, content on the right.
-    // type: "markdown" (render local .md), "external" (Yuque/WeChat link), "pdf" (if you later host PDFs in this repo).
+    // type: "markdown" (render local .md), "external" (Yuque/WeChat link), "pdf" (PDF files in this repo).
     const blogTree = [
       {
+        id: "group-quadruped",
+        label: "Quadruped Robot · 四足机器人",
+        children: [
+          {
+            id: "quad-kinematics",
+            title: "四足机器人运动学分析",
+            type: "markdown",
+            path: "blog/Quadruped_Robot/四足机器人运动学分析.md",
+            tags: ["quadruped", "robotics"],
+          },
+          {
+            id: "quad-dynamics",
+            title: "四足机器人动力学分析",
+            type: "markdown",
+            path: "blog/Quadruped_Robot/四足机器人动力学分析.md",
+            tags: ["quadruped", "dynamics"],
+          },
+          {
+            id: "quad-jacobian",
+            title: "四足机器人雅可比矩阵静力学",
+            type: "markdown",
+            path: "blog/Quadruped_Robot/四足机器人雅可比矩阵静力学.md",
+            tags: ["quadruped", "jacobian"],
+          },
+        ],
+      },
+      {
+        id: "group-rm-induction",
+        label: "RoboMaster Induction · 新生培训",
+        children: [
+          {
+            id: "rm-induction-cubemx-git",
+            title: "CubeMx+Git 入门 - 考核",
+            type: "markdown",
+            path: "blog/RM_Induction_Training/CubeMx+Git入门-考核.md",
+            tags: ["RoboMaster", "induction"],
+          },
+          {
+            id: "rm-induction-first-stage",
+            title: "电控软件新生第一阶段适应性任务",
+            type: "markdown",
+            path: "blog/RM_Induction_Training/电控软件新生第一阶段适应性任务.md",
+            tags: ["RoboMaster", "induction"],
+          },
+        ],
+      },
+      {
+        id: "group-professional-courses",
+        label: "Professional course notes · 专业课程笔记",
+        children: [
+          { id: "course-math-up", title: "《工科数学分析（上）》部分笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/cpvr7uwMr0F4zHKmrBJu4g", tags: ["微积分", "数学"] },
+          { id: "course-linear-alg", title: "《线性代数与空间解析几何》部分笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/YS9hS1WBg7QgjLpj9NarBA", tags: ["线性代数", "数学"] },
+          { id: "course-math-down", title: "《工科数学分析（下）》笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/vh4gPtmE3MfvgMX7R8vpfg", tags: ["微积分", "数学"] },
+          { id: "course-physics-up", title: "《大学物理教程（上）》笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/0bUal67M7AfzipSAE427Jg", tags: ["大学物理", "物理"] },
+          { id: "course-complex", title: "《复变函数与积分变换》自学笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/BdONmTivOsqZeFR_sRO16w", tags: ["复变函数", "数学"] },
+          { id: "course-elec-up", title: "电工学（上）复习", type: "external", url: "https://mp.weixin.qq.com/s/kTxu6umJ7VCvPFVVbyjoAQ", tags: ["电工学", "电学"] },
+          { id: "course-prob", title: "概率论与数理统计 复习", type: "external", url: "https://mp.weixin.qq.com/s/jAZqW0jr8r5nhv8N7cC4Dw", tags: ["概率论", "数学"] },
+          { id: "course-physics-down", title: "大学物理（下） 复习", type: "external", url: "https://mp.weixin.qq.com/s/eaIMIQe_A4R1oX6B24lxhw", tags: ["大学物理", "物理"] },
+          { id: "course-elec-down", title: "电工学（下） 复习", type: "external", url: "https://mp.weixin.qq.com/s/S9KyxQN1WmKDvVu6saKLnA", tags: ["电工学", "电学"] },
+          { id: "course-mechanics", title: "材料力学 复习", type: "external", url: "https://mp.weixin.qq.com/s/CRaVWpb8NDSBtxxAg-EZ9w", tags: ["材料力学", "力学"] },
+          { id: "course-mechatronics", title: "机电系统控制基础 复习", type: "external", url: "https://mp.weixin.qq.com/s/nyXtBTOnbU9NWVm_4jZ0Zg", tags: ["机电控制", "控制"] },
+        ],
+      },
+      {
         id: "group-yuque",
-        label: "Yuque · 语雀文档",
+        label: "Yuque · 语雀文档 / 技术方案",
         children: [
           {
             id: "yuque-1",
@@ -161,56 +225,15 @@
             url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/vtg9p1zqub32dlvh",
             tags: ["yuque", "notes"],
           },
-          // 示例：当你把语雀导出的 Markdown 放到 blog/ 目录后，可以改成:
-          // {
-          //   id: "yuque-md-1",
-          //   title: "语雀导出 · 某篇文章",
-          //   type: "markdown",
-          //   path: "blog/yuque-article-1.md",
-          //   tags: ["yuque", "markdown"],
-          // },
-        ],
-      },
-      {
-        id: "group-course-notes",
-        label: "Course notes · 课程笔记（公众号 PDF）",
-        children: [
           {
-            id: "wechat-course-1",
-            title: "课程笔记 · 公众号一",
+            id: "robomaster-tech-scheme",
+            title: "RoboMaster 完整形态技术方案",
             type: "external",
-            url: "https://mp.weixin.qq.com/s/nyXtBTOnbU9NWVm_4jZ0Zg",
-            tags: ["wechat", "course"],
+            url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/er75cadowlm1agyn",
+            tags: ["RoboMaster", "tech-scheme"],
           },
-          {
-            id: "wechat-course-2",
-            title: "课程笔记 · 公众号二",
-            type: "external",
-            url: "https://mp.weixin.qq.com/s/CRaVWpb8NDSBtxxAg-EZ9w",
-            tags: ["wechat", "course"],
-          },
-          // 如果你之后把公众号笔记下载为 PDF 并上传到仓库，可以改成:
-          // {
-          //   id: "course-pdf-1",
-          //   title: "课程笔记 PDF · 某门课",
-          //   type: "pdf",
-          //   path: "blog/course-notes-1.pdf",
-          //   tags: ["course", "pdf"],
-          // },
-        ],
-      },
-      {
-        id: "group-local",
-        label: "Local posts · 本地文章示例",
-        children: [
-          // 示例：本地 Markdown 博文。你可以把 blog/first_post.md 或其他 .md 文件挂在这里。
-          // {
-          //   id: "local-first-post",
-          //   title: "My first robotics blog",
-          //   type: "markdown",
-          //   path: "blog/first_post.md",
-          //   tags: ["example", "robotics"],
-          // },
+          // 如果你把该技术方案导出为 Markdown 放到 blog/ 目录，例如 blog/RoboMaster/完整形态技术方案.md，
+          // 可以把上面的 external 条目改成 markdown 条目，展示形式与本页其它 md 文章一致。
         ],
       },
     ];
@@ -284,23 +307,33 @@
 
         if (node.type === "external") {
           const safeUrl = node.url || "#";
+          const isWechat = safeUrl.indexOf("mp.weixin.qq.com") !== -1;
           setDetail(`
             <h2 class="notes-detail-title">${node.title}</h2>
             <div class="notes-detail-meta muted">
-              <span class="notes-badge">External</span>
+              <span class="notes-badge">${isWechat ? "微信公众号" : "External"}</span>
               ${node.tags && node.tags.length ? `<span class="notes-meta-tags">${node.tags.join(" · ")}</span>` : ""}
             </div>
-            <p class="muted">
-              This article is hosted on an external platform (Yuque / WeChat, etc.). Click the link
-              below to open it in a new tab.<br>
-              该文章托管在外部平台（如语雀、微信公众号等），点击下方链接在新标签页中打开。
-            </p>
-            <p>
+            ${isWechat ? `
+            <div class="blog-external-card">
+              <p class="muted">该文章发布于微信公众号。微信限制第三方站点内嵌，请点击下方按钮在新标签页中阅读原文。</p>
+              <a class="btn btn-primary blog-external-btn" href="${safeUrl}" target="_blank" rel="noreferrer">
+                <span class="btn-icon-dot"></span>
+                <span>在新标签页中打开 / Open in new tab</span>
+              </a>
+            </div>
+            ` : `
+            <p class="muted">This article is hosted on an external platform. Below is an inline preview; if it does not load, use the button to open in a new tab.</p>
+            <div class="blog-external-preview">
+              <iframe src="${safeUrl}" title="${node.title}" class="blog-external-iframe" loading="lazy"></iframe>
+            </div>
+            <p style="margin-top:10px;">
               <a class="btn btn-primary" href="${safeUrl}" target="_blank" rel="noreferrer">
                 <span class="btn-icon-dot"></span>
-                <span>Open external article / 打开外部文章</span>
+                <span>Open in new tab / 在新标签页中打开</span>
               </a>
             </p>
+            `}
           `);
           return;
         }

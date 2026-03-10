@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>RoboMaster RMUC 2025 Matches · DeviatedZHR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body data-theme="dark">
+  <div class="page-shell">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-brand">
+          <span class="nav-brand-mark"><span></span></span>
+          <span>DeviatedZHR</span>
+        </a>
+        <div class="nav-links">
+          <a href="../index.html" class="nav-link"><span>Home · 首页</span></a>
+          <a href="../projects.html" class="nav-link nav-link-active"><span>Projects · 项目</span></a>
+          <a href="../blog.html" class="nav-link"><span>Blog · 博客</span></a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div class="page-inner page-inner-wide">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-chip">RoboMaster · 比赛回放</div>
+              <h1 class="panel-title">RMUC 2025 · HIT(Weihai) match replays</h1>
+              <p class="panel-subtitle">
+                A collection page for RMUC 2025 match replays where Harbin Institute of Technology
+                (Weihai) participated, powered by Bilibili players when possible.<br>
+                汇总 2025 年 RoboMaster 大学生机器人竞赛（RMUC）中哈尔滨工业大学（威海）参与的比赛回放，并尽量提供
+                B 站内嵌播放器进行在线观看。
+              </p>
+            </div>
+          </div>
+
+          <p class="muted">
+            Note: Bilibili's playlist pages such as
+            <a href="https://space.bilibili.com/20554233/lists" target="_blank" rel="noreferrer">RM 官方赛事主页</a>
+            and
+            <a href="https://space.bilibili.com/20554233/lists/5950748?type=season" target="_blank" rel="noreferrer">RMUC 2025 全国赛回放列表</a>
+            currently require interactive verification and cannot be parsed automatically here. To
+            list HIT(Weihai) matches precisely, please paste the corresponding video links / BVIDs
+            into the configuration below.<br>
+            说明：由于 B 站播放列表页面（如上链接）需要验证码验证，当前页面无法自动解析出所有“哈尔滨工业大学（威海）”
+            参与的对局，请你手动收集对应视频链接或 BVID，并填入下方配置结构。
+          </p>
+
+          <div id="rm-matches-container" class="card-list" style="margin-top:16px;"></div>
+
+          <p class="muted" style="margin-top:18px;">
+            配置方式（仅在本地生效，部署前请在源码中修改）：打开本页面，在底部的
+            <code>rmMatches</code> 数组中为每场比赛添加一项，包括标题、对阵双方、阶段信息以及 BVID 或外链地址。
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <span>© <span id="year-span"></span> DeviatedZHR.</span>
+      <span class="muted">RoboMaster · RMUC 2025 match replays.</span>
+    </footer>
+  </div>
+
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <script>
+    (function () {
+      const root = document.body;
+      const storedTheme = window.localStorage.getItem("dzhr-theme");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        root.setAttribute("data-theme", storedTheme);
+      }
+
+      const scrollTop = document.getElementById("scroll-top");
+      if (scrollTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 160) {
+            scrollTop.classList.add("scroll-top-visible");
+          } else {
+            scrollTop.classList.remove("scroll-top-visible");
+          }
+        });
+        scrollTop.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
+      const yearSpan = document.getElementById("year-span");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
+
+  <script>
+    // 配置 RMUC 2025 比赛回放列表。
+    // type:
+    // - "bilibili": 提供 BVID，可内嵌B站播放器；
+    // - "external": 只提供普通链接（例如分P中的单场比赛），点击后新开标签页。
+    const rmMatches = [
+      // RMUC 2025 东部分区赛 · East Region
+      {
+        id: "rmuc2025-east-1",
+        title: "RMUC 2025 东部分区赛 · 比赛 1",
+        stage: "东部分区赛 East Region",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV11F7VzrEac",
+      },
+      {
+        id: "rmuc2025-east-2",
+        title: "RMUC 2025 东部分区赛 · 比赛 2",
+        stage: "东部分区赛 East Region",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV1Rd7nzjEz6",
+      },
+      {
+        id: "rmuc2025-east-3",
+        title: "RMUC 2025 东部分区赛 · 比赛 3",
+        stage: "东部分区赛 East Region",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV1dC7AzaEHq",
+      },
+      {
+        id: "rmuc2025-east-4",
+        title: "RMUC 2025 东部分区赛 · 比赛 4",
+        stage: "东部分区赛 East Region",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV1C97KzHEzD",
+      },
+      {
+        id: "rmuc2025-east-5",
+        title: "RMUC 2025 东部分区赛 · 比赛 5",
+        stage: "东部分区赛 East Region",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV17U7rzkEPQ",
+      },
+      {
+        id: "rmuc2025-east-6",
+        title: "RMUC 2025 东部分区赛 · 比赛 6",
+        stage: "东部分区赛 East Region",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV1bW7rzfEpV",
+      },
+      {
+        id: "rmuc2025-east-7",
+        title: "RMUC 2025 东部分区赛 · 比赛 7",
+        stage: "东部分区赛 East Region",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV1vU7UzdEww",
+      },
+      {
+        id: "rmuc2025-east-8",
+        title: "RMUC 2025 东部分区赛 · 比赛 8",
+        stage: "东部分区赛 East Region",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV1fk7DzqEZv",
+      },
+
+      // RMUC 2025 全国赛 · National Finals
+      {
+        id: "rmuc2025-finals-1",
+        title: "RMUC 2025 全国赛 · 比赛 1",
+        stage: "全国赛 National Finals",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV1rD8ZzbEfV",
+      },
+      {
+        id: "rmuc2025-finals-2",
+        title: "RMUC 2025 全国赛 · 比赛 2",
+        stage: "全国赛 National Finals",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV1i98kz3EVV",
+      },
+      {
+        id: "rmuc2025-finals-3",
+        title: "RMUC 2025 全国赛 · 比赛 3",
+        stage: "全国赛 National Finals",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV1gUh7zaEGU",
+      },
+      {
+        id: "rmuc2025-finals-4",
+        title: "RMUC 2025 全国赛 · 比赛 4",
+        stage: "全国赛 National Finals",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV1sYhxzyESp",
+      },
+      {
+        id: "rmuc2025-finals-5",
+        title: "RMUC 2025 全国赛 · 比赛 5",
+        stage: "全国赛 National Finals",
+        teams: "哈尔滨工业大学（威海）",
+        type: "bilibili",
+        bvid: "BV1M4hxzSEmm",
+      },
+    ];
+
+    (function () {
+      const container = document.getElementById("rm-matches-container");
+
+      if (!rmMatches.length) {
+        container.innerHTML = '<div class="muted">No matches configured yet. / 还没有配置任何具体比赛回放。</div>';
+        return;
+      }
+
+      container.innerHTML = rmMatches.map(match => {
+        const meta = `
+          <div class="card-meta">
+            <div>${match.stage || ""}</div>
+            <div>${match.teams || ""}</div>
+          </div>
+        `;
+
+        let body = "";
+        if (match.type === "bilibili" && match.bvid) {
+          const src = "https://player.bilibili.com/player.html?bvid=" + encodeURIComponent(match.bvid) + "&autoplay=0";
+          body = `
+            ${meta}
+            <div style="margin-top:8px;border-radius:12px;overflow:hidden;border:1px solid rgba(148,163,184,0.6);background:#000;">
+              <iframe
+                src="${src}"
+                scrolling="no"
+                border="0"
+                frameborder="no"
+                allowfullscreen="true"
+                style="width:100%;height:260px;display:block;"
+              ></iframe>
+            </div>
+          `;
+        } else if (match.type === "external" && match.url) {
+          body = `
+            ${meta}
+            <div class="btn-row" style="margin-top:8px;">
+              <a class="btn btn-outline" href="${match.url}" target="_blank" rel="noreferrer">
+                <span class="btn-icon-arrow">↗</span>
+                <span>Open on Bilibili / 在 B 站打开</span>
+              </a>
+            </div>
+          `;
+        } else {
+          body = meta;
+        }
+
+        return `
+          <article class="card">
+            <div class="card-content">
+              <div class="card-badge-row">
+                <span class="chip chip-strong">RMUC 2025</span>
+              </div>
+              <h2 class="card-title">${match.title}</h2>
+              ${body}
+            </div>
+          </article>
+        `;
+      }).join("");
+    })();
+  </script>
+
+</body>
+</html>
+

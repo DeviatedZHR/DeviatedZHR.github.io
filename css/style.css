@@ -72,7 +72,7 @@ body {
 
 .nav-inner {
     height: var(--nav-height);
-    max-width: 1080px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
@@ -206,11 +206,11 @@ body {
 /* Main content container for static pages */
 .page-main {
     flex: 1;
-    padding: 32px 16px 40px;
+    padding: 24px 20px 40px;
 }
 
 .page-inner {
-    max-width: 1080px;
+    max-width: 1200px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: minmax(0, 3fr);
@@ -218,7 +218,7 @@ body {
 }
 
 .page-inner-wide {
-    max-width: 1120px;
+    max-width: 1280px;
 }
 
 .panel {
@@ -247,7 +247,7 @@ body {
 }
 
 .panel-title {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 650;
     letter-spacing: 0.03em;
 }
@@ -261,12 +261,12 @@ body {
 .panel-header-main {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
 }
 
 .avatar-circle {
-    width: 64px;
-    height: 64px;
+    width: 88px;
+    height: 88px;
     border-radius: 999px;
     background: radial-gradient(circle at 30% 20%, #38bdf8, #0ea5e9 45%, #6366f1 100%);
     border: 2px solid rgba(15, 23, 42, 0.9);
@@ -404,9 +404,9 @@ a:hover {
 /* Project / card layouts */
 .card-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 16px;
-    margin-top: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    margin-top: 10px;
 }
 
 .card {
@@ -710,7 +710,7 @@ body.docsify-root #app {
 /* Notes two-pane layout */
 .notes-layout {
     display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(0, 2.05fr);
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 2.2fr);
     gap: 18px;
     margin-top: 6px;
 }
@@ -721,8 +721,8 @@ body.docsify-root #app {
     background: linear-gradient(150deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.96));
     display: flex;
     flex-direction: column;
-    min-height: 260px;
-    max-height: 560px;
+    min-height: calc(100vh - 220px);
+    max-height: none;
 }
 
 [data-theme="light"] .notes-list {
@@ -834,8 +834,8 @@ body.docsify-root #app {
     border: 1px solid rgba(148, 163, 184, 0.7);
     background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 60%),
     linear-gradient(150deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.96));
-    min-height: 320px;
-    max-height: 640px;
+    min-height: calc(100vh - 220px);
+    max-height: none;
     overflow: auto;
 }
 
@@ -887,6 +887,44 @@ body.docsify-root #app {
 .notes-markdown code {
     font-family: Menlo, Monaco, Consolas, "SF Mono", "JetBrains Mono", monospace;
     font-size: 12px;
+}
+
+/* External link card (WeChat: no iframe, show card + button) */
+.blog-external-card {
+    margin-top: 14px;
+    padding: 18px 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    background: linear-gradient(150deg, rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.4));
+}
+
+[data-theme="light"] .blog-external-card {
+    background: linear-gradient(150deg, rgba(249, 250, 251, 0.9), rgba(243, 244, 246, 0.8));
+}
+
+.blog-external-btn {
+    display: inline-flex;
+    margin-top: 12px;
+}
+
+/* Inline preview for external / WeChat links in blog */
+.blog-external-preview {
+    margin-top: 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    overflow: hidden;
+    background: #0f172a;
+    min-height: 420px;
+}
+.blog-external-iframe {
+    width: 100%;
+    min-height: 70vh;
+    height: 720px;
+    border: none;
+    display: block;
+}
+[data-theme="light"] .blog-external-preview {
+    background: #f3f4f6;
 }
 
 @media (max-width: 900px) {
