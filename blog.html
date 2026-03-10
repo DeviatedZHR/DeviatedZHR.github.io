@@ -2,32 +2,134 @@
 <html>
 
 <head>
-<title>Blog</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>Blog · DeviatedZHR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body data-theme="dark">
+  <div class="page-shell">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+          <span class="nav-brand-mark"><span></span></span>
+          <span>DeviatedZHR</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link"><span>Docs</span></a>
+          <a href="about.html" class="nav-link"><span>About</span></a>
+          <a href="projects.html" class="nav-link"><span>Projects</span></a>
+          <a href="cv.html" class="nav-link nav-link-pill"><span>CV &amp; Files</span></a>
+          <a href="blog.html" class="nav-link nav-link-active"><span>Blog</span></a>
+          <button type="button" class="theme-toggle" id="theme-toggle">
+            <span class="theme-toggle-knob"></span>
+            <span class="theme-toggle-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-</nav>
+    <main class="page-main">
+      <div class="page-inner page-inner-wide">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-chip">Blog</div>
+              <h1 class="panel-title">Notes from the lab</h1>
+              <p class="panel-subtitle">
+                Lightweight posts about robotics experiments, failures and small insights.
+              </p>
+            </div>
+          </div>
 
-<div class="container">
+          <div class="card-list">
+            <article class="card">
+              <div class="card-content">
+                <div class="card-badge-row">
+                  <span class="chip chip-strong">Robotics</span>
+                  <span class="chip">First post</span>
+                </div>
+                <h2 class="card-title">
+                  <a href="blog/first_post.html">My first robotics blog</a>
+                </h2>
+                <p class="card-meta">
+                  A short write-up to kick off this blog — why I care about real-world robots and
+                  what I plan to share here.
+                </p>
+              </div>
+            </article>
+          </div>
 
-<h1>Blog</h1>
+          <div class="page-section-title" style="margin-top: 20px;">Writing workflow</div>
+          <p class="muted">
+            Each post can be a simple static HTML or Markdown file under <code>blog/</code>.
+            Because this site is hosted on GitHub Pages, publishing is as easy as committing a
+            new file.
+          </p>
+        </section>
+      </div>
+    </main>
 
-<ul>
+    <footer class="page-footer">
+      <span>© <span id="year-span"></span> DeviatedZHR.</span>
+      <span class="muted">Blog · small, practical robotics notes.</span>
+    </footer>
+  </div>
 
-<li>
-<a href="blog/first_post.html">
-My First Robotics Blog
-</a>
-</li>
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
 
-</ul>
+  <script>
+    (function () {
+      const root = document.body;
+      const storedTheme = window.localStorage.getItem("dzhr-theme");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        root.setAttribute("data-theme", storedTheme);
+      }
 
-</div>
+      const toggle = document.getElementById("theme-toggle");
+      const label = toggle ? toggle.querySelector(".theme-toggle-label") : null;
+
+      function currentTheme() {
+        return root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        if (label) {
+          label.textContent = theme === "light" ? "Light" : "Dark";
+        }
+        window.localStorage.setItem("dzhr-theme", theme);
+      }
+
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const next = currentTheme() === "light" ? "dark" : "light";
+          applyTheme(next);
+        });
+        applyTheme(currentTheme());
+      }
+
+      const scrollTop = document.getElementById("scroll-top");
+      if (scrollTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 160) {
+            scrollTop.classList.add("scroll-top-visible");
+          } else {
+            scrollTop.classList.remove("scroll-top-visible");
+          }
+        });
+        scrollTop.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
+      const yearSpan = document.getElementById("year-span");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
 
 </body>
 </html>

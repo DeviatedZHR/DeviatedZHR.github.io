@@ -2,48 +2,160 @@
 <html>
 
 <head>
-<title>About</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>About · DeviatedZHR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body data-theme="dark">
+  <div class="page-shell">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+          <span class="nav-brand-mark"><span></span></span>
+          <span>DeviatedZHR</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link"><span>Docs</span></a>
+          <a href="about.html" class="nav-link nav-link-active"><span>About</span></a>
+          <a href="projects.html" class="nav-link"><span>Projects</span></a>
+          <a href="cv.html" class="nav-link nav-link-pill"><span>CV &amp; Files</span></a>
+          <a href="blog.html" class="nav-link"><span>Blog</span></a>
+          <button type="button" class="theme-toggle" id="theme-toggle">
+            <span class="theme-toggle-knob"></span>
+            <span class="theme-toggle-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="cv.html">CV</a>
-<a href="projects.html">Projects</a>
-<a href="blog.html">Blog</a>
-</nav>
+    <main class="page-main">
+      <div class="page-inner page-inner-wide">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-chip">About</div>
+              <h1 class="panel-title">Haoran Zhang</h1>
+              <p class="panel-subtitle">Robotics · Control · Learning Algorithms</p>
+            </div>
+          </div>
 
-<div class="container">
+          <div class="grid-2">
+            <div>
+              <h2 class="page-section-title">Profile</h2>
+              <p class="page-lead">
+                I am Haoran Zhang, a robotics engineering student focusing on intelligent control of
+                physical systems. My interests lie in quadruped locomotion, motion planning, and
+                reinforcement learning for real-world robots.
+              </p>
 
-<h1>About Me</h1>
+              <div class="page-section-title">Current focus</div>
+              <p class="muted">
+                Designing controllers that can bridge the gap between simulation and real hardware,
+                and building practical tools that make robotics experiments easier to reproduce.
+              </p>
 
-<p>
-My name is Haoran Zhang. I study robotics engineering and work on robot
-control and learning algorithms.
-</p>
+              <div class="pill-row">
+                <div class="pill">
+                  <span class="pill-dot"></span>
+                  Robotics engineering
+                </div>
+                <div class="pill">
+                  <span class="pill-dot"></span>
+                  Robot learning
+                </div>
+                <div class="pill">
+                  <span class="pill-dot"></span>
+                  Control &amp; planning
+                </div>
+              </div>
+            </div>
 
-<h2>Education</h2>
+            <div>
+              <h2 class="page-section-title">Education</h2>
+              <p>
+                <strong>Ocean Engineering College</strong><br>
+                Major in Robotics Engineering
+              </p>
+              <p class="muted">
+                Coursework around kinematics, dynamics, control theory, embedded systems, and
+                machine learning for robotics.
+              </p>
 
-<p>
-Ocean Engineering College  
-Major: Robotics Engineering
-</p>
+              <h2 class="page-section-title">Skills</h2>
+              <ul>
+                <li>Python for robotics, simulation and tooling</li>
+                <li>ROS / ROS2 ecosystem</li>
+                <li>Reinforcement learning for control</li>
+                <li>Robot kinematics &amp; dynamics</li>
+                <li>Experiment tooling and visualization</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
 
-<h2>Skills</h2>
+    <footer class="page-footer">
+      <span>© <span id="year-span"></span> DeviatedZHR.</span>
+      <span class="muted">About page · robotics &amp; research background.</span>
+    </footer>
+  </div>
 
-<ul>
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
 
-<li>Python</li>
-<li>ROS</li>
-<li>Reinforcement Learning</li>
-<li>Robot Kinematics</li>
+  <script>
+    (function () {
+      const root = document.body;
+      const storedTheme = window.localStorage.getItem("dzhr-theme");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        root.setAttribute("data-theme", storedTheme);
+      }
 
-</ul>
+      const toggle = document.getElementById("theme-toggle");
+      const label = toggle ? toggle.querySelector(".theme-toggle-label") : null;
 
-</div>
+      function currentTheme() {
+        return root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        if (label) {
+          label.textContent = theme === "light" ? "Light" : "Dark";
+        }
+        window.localStorage.setItem("dzhr-theme", theme);
+      }
+
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const next = currentTheme() === "light" ? "dark" : "light";
+          applyTheme(next);
+        });
+        applyTheme(currentTheme());
+      }
+
+      const scrollTop = document.getElementById("scroll-top");
+      if (scrollTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 160) {
+            scrollTop.classList.add("scroll-top-visible");
+          } else {
+            scrollTop.classList.remove("scroll-top-visible");
+          }
+        });
+        scrollTop.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
+      const yearSpan = document.getElementById("year-span");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
 
 </body>
 </html>

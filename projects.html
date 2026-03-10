@@ -2,41 +2,150 @@
 <html>
 
 <head>
-<title>Projects</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>Projects · DeviatedZHR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body data-theme="dark">
+  <div class="page-shell">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+          <span class="nav-brand-mark"><span></span></span>
+          <span>DeviatedZHR</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link"><span>Docs</span></a>
+          <a href="about.html" class="nav-link"><span>About</span></a>
+          <a href="projects.html" class="nav-link nav-link-active"><span>Projects</span></a>
+          <a href="cv.html" class="nav-link nav-link-pill"><span>CV &amp; Files</span></a>
+          <a href="blog.html" class="nav-link"><span>Blog</span></a>
+          <button type="button" class="theme-toggle" id="theme-toggle">
+            <span class="theme-toggle-knob"></span>
+            <span class="theme-toggle-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="cv.html">CV</a>
-<a href="projects.html">Projects</a>
-<a href="blog.html">Blog</a>
-</nav>
+    <main class="page-main">
+      <div class="page-inner page-inner-wide">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-chip">Projects</div>
+              <h1 class="panel-title">Selected robotics projects</h1>
+              <p class="panel-subtitle">From quadruped locomotion to classic control problems.</p>
+            </div>
+          </div>
 
-<div class="container">
+          <div class="card-list">
+            <article class="card">
+              <div class="card-content">
+                <div class="card-badge-row">
+                  <span class="chip chip-strong">Quadruped robot</span>
+                  <span class="chip">Locomotion control</span>
+                  <span class="chip">Simulation &amp; real</span>
+                </div>
+                <h2 class="card-title">
+                  <a href="projects/quadruped.html">Legged robot control &amp; gait design</a>
+                </h2>
+                <p class="card-meta">
+                  Exploration of trot / pace gaits, contact planning, and controllers that can be
+                  transferred from simulation to real quadruped hardware.
+                </p>
+              </div>
+            </article>
 
-<h1>Projects</h1>
+            <article class="card">
+              <div class="card-content">
+                <div class="card-badge-row">
+                  <span class="chip chip-strong">RL control</span>
+                  <span class="chip">Classic system</span>
+                </div>
+                <h2 class="card-title">
+                  <a href="projects/rl_pendulum.html">Reinforcement learning for inverted pendulum</a>
+                </h2>
+                <p class="card-meta">
+                  Comparing classical controllers (LQR, PID) with RL-based policies for swing-up and
+                  stabilization of an inverted pendulum.
+                </p>
+              </div>
+            </article>
 
-<ul>
+          </div>
 
-<li>
-<a href="projects/quadruped.html">
-Quadruped Robot
-</a>
-</li>
+          <div class="page-section-title" style="margin-top: 18px;">More experiments</div>
+          <p class="muted">
+            I also maintain small, focused experiments which may not deserve a full write-up yet.
+            These can be tracked directly from my
+            <a href="https://github.com/DeviatedZHR" target="_blank" rel="noreferrer">GitHub profile</a>.
+          </p>
+        </section>
+      </div>
+    </main>
 
-<li>
-<a href="projects/rl_pendulum.html">
-Reinforcement Learning Inverted Pendulum
-</a>
-</li>
+    <footer class="page-footer">
+      <span>© <span id="year-span"></span> DeviatedZHR.</span>
+      <span class="muted">Projects page · robotics experiments &amp; demos.</span>
+    </footer>
+  </div>
 
-</ul>
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
 
-</div>
+  <script>
+    (function () {
+      const root = document.body;
+      const storedTheme = window.localStorage.getItem("dzhr-theme");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        root.setAttribute("data-theme", storedTheme);
+      }
+
+      const toggle = document.getElementById("theme-toggle");
+      const label = toggle ? toggle.querySelector(".theme-toggle-label") : null;
+
+      function currentTheme() {
+        return root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        if (label) {
+          label.textContent = theme === "light" ? "Light" : "Dark";
+        }
+        window.localStorage.setItem("dzhr-theme", theme);
+      }
+
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const next = currentTheme() === "light" ? "dark" : "light";
+          applyTheme(next);
+        });
+        applyTheme(currentTheme());
+      }
+
+      const scrollTop = document.getElementById("scroll-top");
+      if (scrollTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 160) {
+            scrollTop.classList.add("scroll-top-visible");
+          } else {
+            scrollTop.classList.remove("scroll-top-visible");
+          }
+        });
+        scrollTop.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
+      const yearSpan = document.getElementById("year-span");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
 
 </body>
 </html>

@@ -5,35 +5,120 @@
   <title>DeviatedZHR</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Base docsify theme + custom site theme -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
-
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
-  <div id="app"></div>
+<body class="docsify-root" data-theme="dark">
+  <div class="page-shell">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+          <span class="nav-brand-mark"><span></span></span>
+          <span>DeviatedZHR</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link nav-link-active"><span>Docs</span></a>
+          <a href="about.html" class="nav-link"><span>About</span></a>
+          <a href="projects.html" class="nav-link"><span>Projects</span></a>
+          <a href="cv.html" class="nav-link nav-link-pill"><span>CV &amp; Files</span></a>
+          <a href="blog.html" class="nav-link"><span>Blog</span></a>
+          <button type="button" class="theme-toggle" id="theme-toggle">
+            <span class="theme-toggle-knob"></span>
+            <span class="theme-toggle-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
 
-<script>
-window.$docsify = {
+    <main>
+      <div id="app"></div>
+    </main>
 
-  name: "DeviatedZHR",
+    <footer class="page-footer">
+      <span>© <span id="year-span"></span> DeviatedZHR. Robotics, control &amp; learning.</span>
+      <span>
+        Built with <a href="https://docsify.js.org" target="_blank" rel="noreferrer">docsify</a>.
+      </span>
+    </footer>
+  </div>
 
-  repo: "https://github.com/DeviatedZHR",
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
 
-  loadSidebar: true,
+  <script>
+    // docsify configuration
+    window.$docsify = {
+      name: "DeviatedZHR",
+      repo: "https://github.com/DeviatedZHR",
+      loadSidebar: true,
+      subMaxLevel: 3,
+      homepage: "README.md",
+      search: "auto"
+    };
 
-  subMaxLevel: 3,
+    // Theme init & toggle (shared across pages via localStorage)
+    (function () {
+      const root = document.body;
+      const storedTheme = window.localStorage.getItem("dzhr-theme");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        root.setAttribute("data-theme", storedTheme);
+      }
+    })();
+  </script>
 
-  homepage: "README.md",
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
 
-  search: "auto"
+  <script>
+    (function () {
+      const root = document.body;
+      const toggle = document.getElementById("theme-toggle");
+      const label = toggle ? toggle.querySelector(".theme-toggle-label") : null;
+      const scrollTop = document.getElementById("scroll-top");
 
-}
-</script>
+      function currentTheme() {
+        return root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      }
 
-<script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+      function applyTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        if (label) {
+          label.textContent = theme === "light" ? "Light" : "Dark";
+        }
+        window.localStorage.setItem("dzhr-theme", theme);
+      }
 
-<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const next = currentTheme() === "light" ? "dark" : "light";
+          applyTheme(next);
+        });
+        // sync label with initial theme
+        applyTheme(currentTheme());
+      }
+
+      if (scrollTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 220) {
+            scrollTop.classList.add("scroll-top-visible");
+          } else {
+            scrollTop.classList.remove("scroll-top-visible");
+          }
+        });
+        scrollTop.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
+      // dynamic year
+      const yearSpan = document.getElementById("year-span");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
 
 </body>
 </html>

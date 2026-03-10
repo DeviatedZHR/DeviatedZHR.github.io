@@ -2,31 +2,166 @@
 <html>
 
 <head>
-<title>CV</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>CV &amp; Files · DeviatedZHR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body data-theme="dark">
+  <div class="page-shell">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+          <span class="nav-brand-mark"><span></span></span>
+          <span>DeviatedZHR</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link"><span>Docs</span></a>
+          <a href="about.html" class="nav-link"><span>About</span></a>
+          <a href="projects.html" class="nav-link"><span>Projects</span></a>
+          <a href="cv.html" class="nav-link nav-link-pill nav-link-active"><span>CV &amp; Files</span></a>
+          <a href="blog.html" class="nav-link"><span>Blog</span></a>
+          <button type="button" class="theme-toggle" id="theme-toggle">
+            <span class="theme-toggle-knob"></span>
+            <span class="theme-toggle-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="cv.html">CV</a>
-<a href="projects.html">Projects</a>
-<a href="blog.html">Blog</a>
-</nav>
+    <main class="page-main">
+      <div class="page-inner page-inner-wide">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-chip">CV &amp; files</div>
+              <h1 class="panel-title">Curriculum Vitae &amp; resources</h1>
+              <p class="panel-subtitle">
+                Central place for my CV, selected PDFs and other sharable files.
+              </p>
+            </div>
+          </div>
 
-<div class="container">
+          <p class="page-lead">
+            The following links are static files inside this GitHub repository, so you can update
+            them simply by dropping new versions into the corresponding folders (for example
+            <code>files/</code>). This gives you a simple, Git-based “upload” workflow that works
+            well with GitHub Pages.
+          </p>
 
-<h1>Curriculum Vitae</h1>
+          <h2 class="page-section-title">CV</h2>
+          <div class="file-grid">
+            <article class="file-card">
+              <div>
+                <strong>Curriculum Vitae (PDF)</strong>
+                <div class="file-meta">
+                  Static export of my current CV. For the latest version, always check this link.
+                </div>
+              </div>
+              <div class="file-actions">
+                <a class="btn btn-primary" href="files/cv.pdf" target="_blank" rel="noreferrer">
+                  <span class="btn-icon-dot"></span>
+                  <span>View / Download CV</span>
+                </a>
+                <span class="file-tag">files/cv.pdf</span>
+              </div>
+            </article>
+          </div>
 
-<p>
-Download my CV:
-</p>
+          <h2 class="page-section-title" style="margin-top: 20px;">Other files</h2>
+          <p class="page-section-subtitle">
+            You can add more files into the repository and expose them here without changing any
+            backend — simply add new entries that point to your static assets.
+          </p>
 
-<a href="files/cv.pdf">Download PDF</a>
+          <div class="file-grid">
+            <article class="file-card">
+              <div>
+                <strong>Example: project report</strong>
+                <div class="file-meta">
+                  Put your PDF under <code>files/</code> (e.g. <code>files/quadruped-report.pdf</code>),
+                  then update this link target.
+                </div>
+              </div>
+              <div class="file-actions">
+                <a class="btn btn-outline" href="#" onclick="return false;">
+                  <span class="btn-icon-arrow">↗</span>
+                  <span>Attach your report here</span>
+                </a>
+                <span class="file-tag">files/quadruped-report.pdf</span>
+              </div>
+            </article>
+          </div>
 
-</div>
+          <p class="muted" style="margin-top: 16px;">
+            Note: GitHub Pages is a static host, so uploads are managed via Git (commit + push) or
+            via the GitHub web interface. This page is designed to make those files easy to find
+            and nicely presented once they are in the repo.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <span>© <span id="year-span"></span> DeviatedZHR.</span>
+      <span class="muted">CV &amp; files · static “upload” area.</span>
+    </footer>
+  </div>
+
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <script>
+    (function () {
+      const root = document.body;
+      const storedTheme = window.localStorage.getItem("dzhr-theme");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        root.setAttribute("data-theme", storedTheme);
+      }
+
+      const toggle = document.getElementById("theme-toggle");
+      const label = toggle ? toggle.querySelector(".theme-toggle-label") : null;
+
+      function currentTheme() {
+        return root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        if (label) {
+          label.textContent = theme === "light" ? "Light" : "Dark";
+        }
+        window.localStorage.setItem("dzhr-theme", theme);
+      }
+
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const next = currentTheme() === "light" ? "dark" : "light";
+          applyTheme(next);
+        });
+        applyTheme(currentTheme());
+      }
+
+      const scrollTop = document.getElementById("scroll-top");
+      if (scrollTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 160) {
+            scrollTop.classList.add("scroll-top-visible");
+          } else {
+            scrollTop.classList.remove("scroll-top-visible");
+          }
+        });
+        scrollTop.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
+      const yearSpan = document.getElementById("year-span");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
 
 </body>
 </html>
