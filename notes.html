@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Notes · DeviatedZHR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body data-theme="dark">
+  <div class="page-shell">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+          <span class="nav-brand-mark"><span></span></span>
+          <span>DeviatedZHR</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link"><span>Home</span></a>
+          <a href="about.html" class="nav-link"><span>About</span></a>
+          <a href="notes.html" class="nav-link nav-link-active"><span>Notes</span></a>
+          <a href="projects.html" class="nav-link"><span>Projects</span></a>
+          <a href="cv.html" class="nav-link nav-link-pill"><span>CV &amp; Files</span></a>
+          <a href="blog.html" class="nav-link"><span>Blog</span></a>
+          <button type="button" class="theme-toggle" id="theme-toggle">
+            <span class="theme-toggle-knob"></span>
+            <span class="theme-toggle-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div class="page-inner page-inner-wide">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-chip">Notes</div>
+              <h1 class="panel-title">Reading notes &amp; essays</h1>
+              <p class="panel-subtitle">
+                A two-pane workspace: search on the left, content on the right. Supports Markdown
+                files converted from WeChat / Yuque.
+              </p>
+            </div>
+          </div>
+
+          <div class="notes-layout">
+            <aside class="notes-list" aria-label="Notes list">
+              <div class="notes-search">
+                <input
+                  id="notes-search-input"
+                  class="notes-search-input"
+                  type="search"
+                  placeholder="Search notes (title, tags, content)…"
+                  autocomplete="off"
+                />
+              </div>
+              <div id="notes-list-container" class="notes-list-items">
+                <!-- Filled by JS -->
+              </div>
+            </aside>
+
+            <article class="notes-detail" aria-label="Note content">
+              <div id="notes-detail-inner" class="notes-detail-inner">
+                <h2 class="notes-detail-title">Select a note</h2>
+                <p class="muted">
+                  在左侧搜索或点击某一篇笔记，这里会以 Markdown 渲染的方式展示全文。<br>
+                  建议做法：
+                </p>
+                <ul class="muted">
+                  <li>把从微信公众号导出的文章整理成 Markdown，放在 <code>notes/</code> 目录。</li>
+                  <li>把语雀文档导出为 Markdown，同样放进 <code>notes/</code>。</li>
+                  <li>然后在本页面底部的 <code>notesConfig</code> 里登记标题、路径和标签。</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <span>© <span id="year-span"></span> DeviatedZHR.</span>
+      <span class="muted">Notes · two-pane reader with search.</span>
+    </footer>
+  </div>
+
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <!-- Lightweight Markdown renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script>
+    (function () {
+      const root = document.body;
+      const storedTheme = window.localStorage.getItem("dzhr-theme");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        root.setAttribute("data-theme", storedTheme);
+      }
+
+      const toggle = document.getElementById("theme-toggle");
+      const label = toggle ? toggle.querySelector(".theme-toggle-label") : null;
+
+      function currentTheme() {
+        return root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        if (label) {
+          label.textContent = theme === "light" ? "Light" : "Dark";
+        }
+        window.localStorage.setItem("dzhr-theme", theme);
+      }
+
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const next = currentTheme() === "light" ? "dark" : "light";
+          applyTheme(next);
+        });
+        applyTheme(currentTheme());
+      }
+
+      const scrollTop = document.getElementById("scroll-top");
+      if (scrollTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 160) {
+            scrollTop.classList.add("scroll-top-visible");
+          } else {
+            scrollTop.classList.remove("scroll-top-visible");
+          }
+        });
+        scrollTop.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
+      const yearSpan = document.getElementById("year-span");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
+
+  <script>
+    // Configuration of notes: you can extend this array with your own entries.
+    // Put Markdown files under /notes, then add one object here for each article.
+    const notesConfig = [
+      {
+        id: "example-intro",
+        title: "示例：如何组织我的机器人学习笔记",
+        path: "notes/example-intro.md",
+        tags: ["example", "robotics", "workflow"],
+        source: "Markdown",
+        highlight: "Example",
+      },
+      // 示例：你可以添加一篇来自语雀导出的文档
+      // {
+      //   id: "yuque-some-topic",
+      //   title: "语雀：某个机器人控制笔记",
+      //   path: "notes/yuque-control-note.md",
+      //   tags: ["yuque", "control", "robotics"],
+      //   source: "Yuque",
+      // },
+      // 示例：你可以添加一篇来自公众号的文章
+      // {
+      //   id: "wechat-some-article",
+      //   title: "公众号：某次实验记录",
+      //   path: "notes/wechat-experiment-log.md",
+      //   tags: ["wechat", "experiment"],
+      //   source: "WeChat",
+      // },
+    ];
+
+    (function () {
+      const listContainer = document.getElementById("notes-list-container");
+      const detailInner = document.getElementById("notes-detail-inner");
+      const searchInput = document.getElementById("notes-search-input");
+
+      let activeId = null;
+      const cache = new Map(); // id -> { text, html }
+
+      function renderList(filtered) {
+        const items = filtered || notesConfig;
+        if (!items.length) {
+          listContainer.innerHTML = '<div class="muted">No notes yet. Add Markdown files under <code>notes/</code> and update <code>notesConfig</code> in this page.</div>';
+          return;
+        }
+
+        listContainer.innerHTML = items.map(note => {
+          const isActive = note.id === activeId;
+          const tags = (note.tags || []).map(t => `<span class="chip notes-chip">${t}</span>`).join("");
+          const badge = note.source ? `<span class="notes-badge">${note.source}</span>` : "";
+          return `
+            <button class="notes-list-item${isActive ? " notes-list-item-active" : ""}" data-id="${note.id}">
+              <div class="notes-list-title-row">
+                <span class="notes-list-title">${note.title}</span>
+                ${badge}
+              </div>
+              ${tags ? `<div class="notes-list-tags">${tags}</div>` : ""}
+            </button>
+          `;
+        }).join("");
+      }
+
+      async function loadNote(note) {
+        if (!note) return;
+        if (activeId === note.id && cache.has(note.id)) return;
+        activeId = note.id;
+        renderList(); // update active state
+
+        detailInner.innerHTML = `<p class="muted">Loading <strong>${note.title}</strong>…</p>`;
+
+        try {
+          if (cache.has(note.id)) {
+            const cached = cache.get(note.id);
+            detailInner.innerHTML = cached.html;
+            return;
+          }
+          const res = await fetch(note.path + "?_=" + Date.now());
+          if (!res.ok) {
+            throw new Error("Failed to load: " + res.statusText);
+          }
+          const text = await res.text();
+          const html = `
+            <h2 class="notes-detail-title">${note.title}</h2>
+            <div class="notes-detail-meta muted">
+              ${note.source ? `<span class="notes-badge">${note.source}</span>` : ""}
+              ${(note.tags && note.tags.length) ? "<span class=\"notes-meta-tags\">" + note.tags.join(" · ") + "</span>" : ""}
+            </div>
+            <div class="notes-markdown">
+              ${window.marked ? window.marked.parse(text) : "<pre>" + text.replace(/[&<>]/g, s => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[s])) + "</pre>"}
+            </div>
+          `;
+
+          cache.set(note.id, { text, html });
+          detailInner.innerHTML = html;
+        } catch (err) {
+          console.error(err);
+          detailInner.innerHTML = `<p class="muted">加载失败：${err}</p>`;
+        }
+      }
+
+      function filterNotes(query) {
+        const q = query.trim().toLowerCase();
+        if (!q) return notesConfig;
+
+        const results = [];
+        const promises = [];
+
+        notesConfig.forEach(note => {
+          const basicMatch =
+            (note.title && note.title.toLowerCase().includes(q)) ||
+            (note.tags && note.tags.join(" ").toLowerCase().includes(q)) ||
+            (note.source && note.source.toLowerCase().includes(q));
+
+          if (basicMatch) {
+            results.push(note);
+            return;
+          }
+
+          if (cache.has(note.id)) {
+            const cached = cache.get(note.id);
+            if (cached.text && cached.text.toLowerCase().includes(q)) {
+              results.push(note);
+            }
+            return;
+          }
+
+          // Lazy-load content for search
+          const p = fetch(note.path + "?_search=" + Date.now())
+            .then(res => res.ok ? res.text() : "")
+            .then(text => {
+              cache.set(note.id, { text, html: null });
+              if (text.toLowerCase().includes(q)) {
+                results.push(note);
+              }
+            })
+            .catch(() => {});
+          promises.push(p);
+        });
+
+        if (!promises.length) {
+          return results;
+        }
+
+        // We'll optimistically render based on title/tag first, then re-render after content search completes.
+        Promise.all(promises).then(() => {
+          const finalResults = filterNotes(query);
+          renderList(finalResults);
+        });
+
+        return results;
+      }
+
+      // Initial render
+      renderList();
+
+      // If URL has hash like #note=example-intro, auto-open it
+      const hashMatch = location.hash.match(/note=([^&]+)/);
+      if (hashMatch) {
+        const idFromHash = decodeURIComponent(hashMatch[1]);
+        const note = notesConfig.find(n => n.id === idFromHash);
+        if (note) {
+          loadNote(note);
+        }
+      } else if (notesConfig[0]) {
+        // Optionally auto-open first note
+        // loadNote(notesConfig[0]);
+      }
+
+      // List click handler
+      listContainer.addEventListener("click", function (e) {
+        const button = e.target.closest(".notes-list-item");
+        if (!button) return;
+        const id = button.getAttribute("data-id");
+        const note = notesConfig.find(n => n.id === id);
+        if (note) {
+          history.replaceState(null, "", "#note=" + encodeURIComponent(note.id));
+          loadNote(note);
+        }
+      });
+
+      // Search handler (debounced)
+      let searchTimer = null;
+      searchInput.addEventListener("input", function () {
+        const value = searchInput.value;
+        if (searchTimer) {
+          clearTimeout(searchTimer);
+        }
+        searchTimer = setTimeout(function () {
+          const filtered = filterNotes(value);
+          renderList(filtered);
+        }, 160);
+      });
+    })();
+  </script>
+
+</body>
+</html>
+

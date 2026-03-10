@@ -5,12 +5,10 @@
   <title>DeviatedZHR</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Base docsify theme + custom site theme -->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="docsify-root" data-theme="dark">
+<body data-theme="dark">
   <div class="page-shell">
     <header class="nav">
       <div class="nav-inner">
@@ -19,8 +17,9 @@
           <span>DeviatedZHR</span>
         </a>
         <div class="nav-links">
-          <a href="index.html" class="nav-link nav-link-active"><span>Docs</span></a>
+          <a href="index.html" class="nav-link nav-link-active"><span>Home</span></a>
           <a href="about.html" class="nav-link"><span>About</span></a>
+          <a href="notes.html" class="nav-link"><span>Notes</span></a>
           <a href="projects.html" class="nav-link"><span>Projects</span></a>
           <a href="cv.html" class="nav-link nav-link-pill"><span>CV &amp; Files</span></a>
           <a href="blog.html" class="nav-link"><span>Blog</span></a>
@@ -32,8 +31,86 @@
       </div>
     </header>
 
-    <main>
-      <div id="app"></div>
+    <main class="page-main">
+      <div class="page-inner page-inner-wide">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-chip">Robotics · Control · Learning</div>
+              <h1 class="panel-title">Haoran Zhang · DeviatedZHR</h1>
+              <p class="panel-subtitle">
+                A minimal hub for my robotics work — notes, projects and CV.
+              </p>
+            </div>
+          </div>
+
+          <p class="page-lead">
+            I work on robotic systems, focusing on control, motion planning and reinforcement
+            learning on real hardware. This site keeps things intentionally simple: a place to
+            browse experiments, read notes, and grab my CV.
+          </p>
+
+          <div class="card-list" style="margin-top:18px;">
+            <article class="card">
+              <div class="card-content">
+                <div class="card-badge-row">
+                  <span class="chip chip-strong">Notes</span>
+                  <span class="chip">WeChat · Yuque · Markdown</span>
+                </div>
+                <h2 class="card-title">Reading notes &amp; essays</h2>
+                <p class="card-meta">
+                  A searchable collection of robotics notes and articles, including content
+                  originally written on WeChat and Yuque.
+                </p>
+                <div class="btn-row">
+                  <a class="btn btn-primary" href="notes.html">
+                    <span class="btn-icon-dot"></span>
+                    <span>Open notes workspace</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-content">
+                <div class="card-badge-row">
+                  <span class="chip chip-strong">Projects</span>
+                  <span class="chip">Quadruped · RL · Control</span>
+                </div>
+                <h2 class="card-title">Selected projects</h2>
+                <p class="card-meta">
+                  A quick overview of representative robotics projects I have worked on.
+                </p>
+                <div class="btn-row">
+                  <a class="btn btn-outline" href="projects.html">
+                    <span class="btn-icon-arrow">↗</span>
+                    <span>View projects</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-content">
+                <div class="card-badge-row">
+                  <span class="chip chip-strong">CV</span>
+                  <span class="chip">PDF viewer</span>
+                </div>
+                <h2 class="card-title">Curriculum Vitae</h2>
+                <p class="card-meta">
+                  An in-browser view of my CV, with a direct PDF download link.
+                </p>
+                <div class="btn-row">
+                  <a class="btn btn-outline" href="cv.html">
+                    <span class="btn-icon-arrow">↗</span>
+                    <span>Open CV &amp; files</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
     </main>
 
     <footer class="page-footer">
@@ -45,31 +122,6 @@
   </div>
 
   <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
-
-  <script>
-    // docsify configuration
-    window.$docsify = {
-      name: "DeviatedZHR",
-      repo: "https://github.com/DeviatedZHR",
-      loadSidebar: true,
-      subMaxLevel: 3,
-      homepage: "README.md",
-      search: "auto"
-    };
-
-    // Theme init & toggle (shared across pages via localStorage)
-    (function () {
-      const root = document.body;
-      const storedTheme = window.localStorage.getItem("dzhr-theme");
-      if (storedTheme === "light" || storedTheme === "dark") {
-        root.setAttribute("data-theme", storedTheme);
-      }
-    })();
-  </script>
-
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
 
   <script>
     (function () {

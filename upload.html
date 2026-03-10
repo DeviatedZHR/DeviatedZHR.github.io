@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Upload via GitHub API · DeviatedZHR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body data-theme="dark">
+  <div class="page-shell">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+          <span class="nav-brand-mark"><span></span></span>
+          <span>DeviatedZHR</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link"><span>Docs</span></a>
+          <a href="about.html" class="nav-link"><span>About</span></a>
+          <a href="projects.html" class="nav-link"><span>Projects</span></a>
+          <a href="cv.html" class="nav-link nav-link-pill"><span>CV &amp; Files</span></a>
+          <a href="blog.html" class="nav-link"><span>Blog</span></a>
+          <button type="button" class="theme-toggle" id="theme-toggle">
+            <span class="theme-toggle-knob"></span>
+            <span class="theme-toggle-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div class="page-inner page-inner-wide">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-chip">GitHub API</div>
+              <h1 class="panel-title">Upload file to this repo</h1>
+              <p class="panel-subtitle">
+                Use the official GitHub REST API to add files (e.g. PDFs under <code>files/</code>) without leaving this site.
+              </p>
+            </div>
+          </div>
+
+          <p class="page-lead">
+            The GitHub API itself是免费的，只要在免费额度内使用即可。下面的表单在浏览器中直接调用
+            GitHub 的 <code>/contents</code> 接口，把文件以新的 commit 形式推送到
+            <code>DeviatedZHR/DeviatedZHR.github.io</code> 仓库。
+          </p>
+
+          <p class="muted">
+            安全提示：为了安全，<strong>不要把 Token 硬编码在代码里</strong>。本页面只是在你本地浏览器里使用
+            你手动输入的 Token，不会把它保存到任何地方，也不会把它发到除 GitHub 以外的其他服务器。
+          </p>
+
+          <form id="upload-form" style="margin-top: 18px;">
+            <div class="page-section-title">1. GitHub 访问令牌</div>
+            <p class="page-section-subtitle">
+              在 GitHub 个人设置中创建一个 Fine-grained personal access token，只勾选这个仓库的
+              <code>contents: read &amp; write</code> 权限，然后复制粘贴到这里。
+            </p>
+
+            <input
+              type="password"
+              id="token-input"
+              placeholder="ghp_xxx 或 fine-grained token"
+              style="width:100%;max-width:420px;margin:6px 0 14px;padding:8px 10px;border-radius:10px;border:1px solid rgba(148,163,184,0.75);background:rgba(15,23,42,0.96);color:inherit;"
+              autocomplete="off"
+              required
+            />
+
+            <div class="page-section-title">2. 目标路径与分支</div>
+            <p class="page-section-subtitle">
+              默认会上传到 <code>files/</code> 目录和 <code>main</code> 分支，你可以根据需要修改。
+            </p>
+
+            <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+              <input
+                type="text"
+                id="path-input"
+                value="files/"
+                placeholder="相对路径，例如 files/ 或 reports/"
+                style="flex:1 1 180px;min-width:160px;padding:8px 10px;border-radius:10px;border:1px solid rgba(148,163,184,0.75);background:rgba(15,23,42,0.96);color:inherit;"
+              />
+              <input
+                type="text"
+                id="branch-input"
+                value="main"
+                placeholder="分支名，例如 main"
+                style="flex:0 0 120px;min-width:120px;padding:8px 10px;border-radius:10px;border:1px solid rgba(148,163,184,0.75);background:rgba(15,23,42,0.96);color:inherit;"
+              />
+            </div>
+
+            <div class="page-section-title">3. 选择文件并提交</div>
+            <p class="page-section-subtitle">
+              挑选一个本地文件（例如 PDF 报告），然后填写一个简短的 commit 描述。
+            </p>
+
+            <input
+              type="file"
+              id="file-input"
+              style="margin:6px 0 10px;"
+              required
+            />
+
+            <input
+              type="text"
+              id="message-input"
+              value="Add file via web upload"
+              placeholder="Commit message"
+              style="display:block;width:100%;max-width:420px;margin:6px 0 14px;padding:8px 10px;border-radius:10px;border:1px solid rgba(148,163,184,0.75);background:rgba(15,23,42,0.96);color:inherit;"
+              required
+            />
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary" id="upload-button">
+                <span class="btn-icon-dot"></span>
+                <span>Upload via GitHub API</span>
+              </button>
+              <button type="button" class="btn btn-outline" id="reset-button">
+                <span class="btn-icon-arrow">↺</span>
+                <span>Clear form</span>
+              </button>
+            </div>
+          </form>
+
+          <div id="upload-status" class="muted" style="margin-top:16px;"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <span>© <span id="year-span"></span> DeviatedZHR.</span>
+      <span class="muted">Upload helper · uses free GitHub REST API.</span>
+    </footer>
+  </div>
+
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <script>
+    (function () {
+      const root = document.body;
+      const storedTheme = window.localStorage.getItem("dzhr-theme");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        root.setAttribute("data-theme", storedTheme);
+      }
+
+      const toggle = document.getElementById("theme-toggle");
+      const label = toggle ? toggle.querySelector(".theme-toggle-label") : null;
+
+      function currentTheme() {
+        return root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        if (label) {
+          label.textContent = theme === "light" ? "Light" : "Dark";
+        }
+        window.localStorage.setItem("dzhr-theme", theme);
+      }
+
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const next = currentTheme() === "light" ? "dark" : "light";
+          applyTheme(next);
+        });
+        applyTheme(currentTheme());
+      }
+
+      const scrollTop = document.getElementById("scroll-top");
+      if (scrollTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 160) {
+            scrollTop.classList.add("scroll-top-visible");
+          } else {
+            scrollTop.classList.remove("scroll-top-visible");
+          }
+        });
+        scrollTop.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
+      const yearSpan = document.getElementById("year-span");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const owner = "DeviatedZHR";
+      const repo = "DeviatedZHR.github.io";
+
+      const form = document.getElementById("upload-form");
+      const tokenInput = document.getElementById("token-input");
+      const pathInput = document.getElementById("path-input");
+      const branchInput = document.getElementById("branch-input");
+      const fileInput = document.getElementById("file-input");
+      const messageInput = document.getElementById("message-input");
+      const statusEl = document.getElementById("upload-status");
+      const uploadButton = document.getElementById("upload-button");
+      const resetButton = document.getElementById("reset-button");
+
+      function setStatus(text, isError) {
+        if (!statusEl) return;
+        statusEl.style.color = isError ? "#fca5a5" : "";
+        statusEl.innerHTML = text;
+      }
+
+      function toBase64File(file) {
+        return new Promise(function (resolve, reject) {
+          const reader = new FileReader();
+          reader.onload = function () {
+            const result = reader.result;
+            // result is "data:...;base64,xxxx"
+            const parts = String(result).split(",");
+            if (parts.length < 2) {
+              reject(new Error("Unexpected data URL format"));
+            } else {
+              resolve(parts[1]);
+            }
+          };
+          reader.onerror = function (e) {
+            reject(e || new Error("Failed to read file"));
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function toggleDisabled(disabled) {
+        if (uploadButton) {
+          uploadButton.disabled = disabled;
+          uploadButton.style.opacity = disabled ? 0.6 : 1;
+        }
+      }
+
+      if (resetButton) {
+        resetButton.addEventListener("click", function () {
+          form.reset();
+          pathInput.value = "files/";
+          branchInput.value = "main";
+          messageInput.value = "Add file via web upload";
+          setStatus("", false);
+        });
+      }
+
+      if (form) {
+        form.addEventListener("submit", async function (event) {
+          event.preventDefault();
+          setStatus("", false);
+
+          const token = tokenInput.value.trim();
+          const basePath = pathInput.value.trim() || "files/";
+          const branch = branchInput.value.trim() || "main";
+          const file = fileInput.files && fileInput.files[0];
+          const message = messageInput.value.trim() || "Add file via web upload";
+
+          if (!token) {
+            setStatus("请先填写 GitHub Token。", true);
+            return;
+          }
+          if (!file) {
+            setStatus("请选择要上传的文件。", true);
+            return;
+          }
+
+          toggleDisabled(true);
+          setStatus("正在读取文件并调用 GitHub API，请稍候…", false);
+
+          try {
+            const content = await toBase64File(file);
+            const normalizedPath = basePath.endsWith("/")
+              ? basePath.slice(0, -1)
+              : basePath;
+            const targetPath = normalizedPath + "/" + file.name;
+
+            const url = "https://api.github.com/repos/" + owner + "/" + repo + "/contents/" + encodeURIComponent(targetPath);
+
+            const response = await fetch(url, {
+              method: "PUT",
+              headers: {
+                "Accept": "application/vnd.github+json",
+                "Authorization": "token " + token,
+              },
+              body: JSON.stringify({
+                message: message,
+                content: content,
+                branch: branch
+              })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+              if (data && data.message && String(data.message).indexOf("exists") !== -1) {
+                setStatus("上传失败：目标路径已有同名文件，请更换文件名或路径。<br><code>" + targetPath + "</code>", true);
+              } else {
+                setStatus("上传失败：" + (data && data.message ? data.message : response.statusText), true);
+              }
+              toggleDisabled(false);
+              return;
+            }
+
+            const htmlUrl = data && data.content && data.content.html_url
+              ? data.content.html_url
+              : "https://github.com/" + owner + "/" + repo + "/blob/" + encodeURIComponent(branch) + "/" + targetPath;
+
+            const rawUrl = "https://raw.githubusercontent.com/" + owner + "/" + repo + "/" + encodeURIComponent(branch) + "/" + targetPath;
+
+            setStatus(
+              "上传成功！🎉<br>" +
+              "GitHub 文件链接：<a href=\"" + htmlUrl + "\" target=\"_blank\" rel=\"noreferrer\">" + htmlUrl + "</a><br>" +
+              "Raw 直链（可在 CV 页面或其他位置引用）：<br><code>" + rawUrl + "</code>",
+              false
+            );
+
+            form.reset();
+            pathInput.value = "files/";
+            branchInput.value = branch;
+            messageInput.value = "Add file via web upload";
+          } catch (error) {
+            console.error(error);
+            setStatus("发生错误：" + error, true);
+          } finally {
+            toggleDisabled(false);
+          }
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>

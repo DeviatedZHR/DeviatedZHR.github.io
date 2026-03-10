@@ -51,22 +51,46 @@
           </p>
 
           <h2 class="page-section-title">CV</h2>
-          <div class="file-grid">
-            <article class="file-card">
-              <div>
-                <strong>Curriculum Vitae (PDF)</strong>
-                <div class="file-meta">
-                  Static export of my current CV. For the latest version, always check this link.
-                </div>
+          <div class="cv-layout">
+            <div class="cv-meta">
+              <p class="page-lead">
+                The PDF on the right is rendered directly in the browser, similar to a Yuque page:
+                you can scroll, zoom, or open it in a new tab for printing.
+              </p>
+              <div class="file-grid">
+                <article class="file-card">
+                  <div>
+                    <strong>Curriculum Vitae (PDF)</strong>
+                    <div class="file-meta">
+                      Static export of my current CV. For the latest version, always check this link.
+                    </div>
+                  </div>
+                  <div class="file-actions">
+                    <a class="btn btn-primary" href="files/cv.pdf" target="_blank" rel="noreferrer">
+                      <span class="btn-icon-dot"></span>
+                      <span>Open in new tab</span>
+                    </a>
+                    <span class="file-tag">files/cv.pdf</span>
+                  </div>
+                </article>
               </div>
-              <div class="file-actions">
-                <a class="btn btn-primary" href="files/cv.pdf" target="_blank" rel="noreferrer">
-                  <span class="btn-icon-dot"></span>
-                  <span>View / Download CV</span>
-                </a>
-                <span class="file-tag">files/cv.pdf</span>
+              <p class="muted">
+                Tip: whenever you update the CV PDF in the repository (same filename), this viewer
+                will automatically show the latest version.
+              </p>
+            </div>
+            <div class="cv-viewer">
+              <iframe
+                src="files/cv.pdf"
+                title="CV PDF viewer"
+                loading="lazy"
+                class="cv-iframe"
+              ></iframe>
+              <div class="cv-viewer-fallback muted">
+                If the PDF viewer does not load, you can
+                <a href="files/cv.pdf" target="_blank" rel="noreferrer">open the CV in a new tab</a>.
               </div>
-            </article>
+            </div>
           </div>
 
           <h2 class="page-section-title" style="margin-top: 20px;">Other files</h2>
@@ -92,6 +116,19 @@
                 <span class="file-tag">files/quadruped-report.pdf</span>
               </div>
             </article>
+          </div>
+
+          <div class="page-section-title" style="margin-top: 22px;">Upload helper</div>
+          <p class="page-section-subtitle">
+            Prefer a simple UI? You can also open a small helper page that uses the free GitHub REST
+            API to push files into this repository (requires a personal access token with
+            <code>contents: write</code> permission).
+          </p>
+          <div class="btn-row">
+            <a class="btn btn-outline" href="upload.html">
+              <span class="btn-icon-arrow">↗</span>
+              <span>Open GitHub API upload tool</span>
+            </a>
           </div>
 
           <p class="muted" style="margin-top: 16px;">
