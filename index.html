@@ -1,60 +1,39 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-<title>Haoran Zhang</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>DeviatedZHR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+
 </head>
 
 <body>
+  <div id="app"></div>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="cv.html">CV</a>
-<a href="projects.html">Projects</a>
-<a href="blog.html">Blog</a>
-</nav>
+<script>
+window.$docsify = {
 
-<div class="container">
+  name: "DeviatedZHR",
 
-<h1>Haoran Zhang</h1>
+  repo: "https://github.com/DeviatedZHR",
 
-<p>
-Robotics | Reinforcement Learning | SLAM
-</p>
+  loadSidebar: true,
 
-<h2>About Me</h2>
+  subMaxLevel: 3,
 
-<p>
-I am a robotics student focusing on reinforcement learning control
-and quadruped robot systems.
-</p>
+  homepage: "README.md",
 
-<h2>Research Interests</h2>
+  search: "auto"
 
-<ul>
-<li>Reinforcement Learning Control</li>
-<li>Quadruped Robot</li>
-<li>SLAM</li>
-<li>Robot Perception</li>
-</ul>
+}
+</script>
 
-<h2>Latest Projects</h2>
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
 
-<div class="project">
-<a href="projects/quadruped.html">Quadruped Robot</a>
-</div>
-
-<div class="project">
-<a href="projects/rl_pendulum.html">RL Inverted Pendulum</a>
-</div>
-
-</div>
-
-<footer>
-© 2026 Haoran Zhang
-</footer>
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
 
 </body>
 </html>
