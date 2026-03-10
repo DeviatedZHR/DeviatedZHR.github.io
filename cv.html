@@ -17,11 +17,12 @@
           <span>DeviatedZHR</span>
         </a>
         <div class="nav-links">
-          <a href="index.html" class="nav-link"><span>Docs</span></a>
-          <a href="about.html" class="nav-link"><span>About</span></a>
-          <a href="projects.html" class="nav-link"><span>Projects</span></a>
-          <a href="cv.html" class="nav-link nav-link-pill nav-link-active"><span>CV &amp; Files</span></a>
-          <a href="blog.html" class="nav-link"><span>Blog</span></a>
+          <a href="index.html" class="nav-link"><span>Home · 首页</span></a>
+          <a href="about.html" class="nav-link"><span>About · 关于</span></a>
+          <a href="notes.html" class="nav-link"><span>Notes · 笔记</span></a>
+          <a href="projects.html" class="nav-link"><span>Projects · 项目</span></a>
+          <a href="cv.html" class="nav-link nav-link-pill nav-link-active"><span>CV &amp; Files · 简历</span></a>
+          <a href="blog.html" class="nav-link"><span>Blog · 博客</span></a>
           <button type="button" class="theme-toggle" id="theme-toggle">
             <span class="theme-toggle-knob"></span>
             <span class="theme-toggle-label">Dark</span>
@@ -46,8 +47,9 @@
           <p class="page-lead">
             The following links are static files inside this GitHub repository, so you can update
             them simply by dropping new versions into the corresponding folders (for example
-            <code>files/</code>). This gives you a simple, Git-based “upload” workflow that works
-            well with GitHub Pages.
+            <code>cv/</code> or <code>files/</code>). This gives you a simple, Git-based “upload” workflow that works
+            well with GitHub Pages.<br>
+            下面的链接都是仓库中的静态文件，只要把新的 PDF 放进对应文件夹（如 <code>cv/</code>、<code>files/</code>）并提交即可完成“上传”。
           </p>
 
           <h2 class="page-section-title">CV</h2>
@@ -55,7 +57,8 @@
             <div class="cv-meta">
               <p class="page-lead">
                 The PDF on the right is rendered directly in the browser, similar to a Yuque page:
-                you can scroll, zoom, or open it in a new tab for printing.
+                you can scroll, zoom, or open it in a new tab for printing.<br>
+                右侧直接以网页形式嵌入 PDF，类似语雀的阅读体验，可以滚动、缩放或在新标签页中打开打印。
               </p>
               <div class="file-grid">
                 <article class="file-card">
@@ -66,11 +69,11 @@
                     </div>
                   </div>
                   <div class="file-actions">
-                    <a class="btn btn-primary" href="files/cv.pdf" target="_blank" rel="noreferrer">
+                    <a class="btn btn-primary" href="cv/cv.pdf" target="_blank" rel="noreferrer">
                       <span class="btn-icon-dot"></span>
                       <span>Open in new tab</span>
                     </a>
-                    <span class="file-tag">files/cv.pdf</span>
+                    <span class="file-tag">cv/cv.pdf</span>
                   </div>
                 </article>
               </div>
@@ -81,14 +84,15 @@
             </div>
             <div class="cv-viewer">
               <iframe
-                src="files/cv.pdf"
+                src="cv/cv.pdf"
                 title="CV PDF viewer"
                 loading="lazy"
                 class="cv-iframe"
               ></iframe>
               <div class="cv-viewer-fallback muted">
                 If the PDF viewer does not load, you can
-                <a href="files/cv.pdf" target="_blank" rel="noreferrer">open the CV in a new tab</a>.
+                <a href="cv/cv.pdf" target="_blank" rel="noreferrer">open the CV in a new tab</a>.<br>
+                如果浏览器内嵌预览失败，可以点击链接在新标签页中打开简历。
               </div>
             </div>
           </div>

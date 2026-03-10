@@ -1,6 +1,6 @@
 # DeviatedZHR
 
-Robotics | Reinforcement Learning | SLAM
+Robotics | Reinforcement Learning
 
 ---
 
@@ -12,7 +12,6 @@ Research interests:
 
 - Reinforcement Learning Control
 - Quadruped Robot
-- SLAM
 - Robot Perception
 
 ---

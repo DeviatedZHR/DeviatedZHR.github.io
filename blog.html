@@ -17,11 +17,12 @@
           <span>DeviatedZHR</span>
         </a>
         <div class="nav-links">
-          <a href="index.html" class="nav-link"><span>Docs</span></a>
-          <a href="about.html" class="nav-link"><span>About</span></a>
-          <a href="projects.html" class="nav-link"><span>Projects</span></a>
-          <a href="cv.html" class="nav-link nav-link-pill"><span>CV &amp; Files</span></a>
-          <a href="blog.html" class="nav-link nav-link-active"><span>Blog</span></a>
+          <a href="index.html" class="nav-link"><span>Home · 首页</span></a>
+          <a href="about.html" class="nav-link"><span>About · 关于</span></a>
+          <a href="notes.html" class="nav-link"><span>Notes · 笔记</span></a>
+          <a href="projects.html" class="nav-link"><span>Projects · 项目</span></a>
+          <a href="cv.html" class="nav-link nav-link-pill"><span>CV &amp; Files · 简历</span></a>
+          <a href="blog.html" class="nav-link nav-link-active"><span>Blog · 博客</span></a>
           <button type="button" class="theme-toggle" id="theme-toggle">
             <span class="theme-toggle-knob"></span>
             <span class="theme-toggle-label">Dark</span>
@@ -35,38 +36,42 @@
         <section class="panel">
           <div class="panel-header">
             <div>
-              <div class="panel-chip">Blog</div>
+              <div class="panel-chip">Blog · 博客与文章</div>
               <h1 class="panel-title">Notes from the lab</h1>
               <p class="panel-subtitle">
-                Lightweight posts about robotics experiments, failures and small insights.
+                A Yuque-style two-pane blog: folders and posts on the left, content on the right.<br>
+                模仿语雀的双栏界面：左侧是文档分组和列表，右侧是正文区域。
               </p>
             </div>
           </div>
 
-          <div class="card-list">
-            <article class="card">
-              <div class="card-content">
-                <div class="card-badge-row">
-                  <span class="chip chip-strong">Robotics</span>
-                  <span class="chip">First post</span>
-                </div>
-                <h2 class="card-title">
-                  <a href="blog/first_post.html">My first robotics blog</a>
-                </h2>
-                <p class="card-meta">
-                  A short write-up to kick off this blog — why I care about real-world robots and
-                  what I plan to share here.
+          <div class="notes-layout">
+            <aside class="notes-list" aria-label="Blog documents">
+              <div class="notes-search">
+                <input
+                  id="blog-search-input"
+                  class="notes-search-input"
+                  type="search"
+                  placeholder="Search posts / 搜索文章标题、标签"
+                  autocomplete="off"
+                />
+              </div>
+              <div id="blog-tree-container" class="notes-list-items">
+                <!-- Filled by JS -->
+              </div>
+            </aside>
+
+            <article class="notes-detail" aria-label="Blog content">
+              <div id="blog-detail-inner" class="notes-detail-inner">
+                <h2 class="notes-detail-title">Select a post / 选择一篇文章</h2>
+                <p class="muted">
+                  左侧展示的是类似语雀的分组与文档列表：<br>
+                  - 可以把语雀导出的 Markdown 放在 <code>blog/</code> 或 <code>notes/</code> 中，并在下方配置中登记；<br>
+                  - 公众号课程笔记（PDF 或图片）可以作为“课程笔记”分组中的条目，点击后在新标签页中打开。
                 </p>
               </div>
             </article>
           </div>
-
-          <div class="page-section-title" style="margin-top: 20px;">Writing workflow</div>
-          <p class="muted">
-            Each post can be a simple static HTML or Markdown file under <code>blog/</code>.
-            Because this site is hosted on GitHub Pages, publishing is as easy as committing a
-            new file.
-          </p>
         </section>
       </div>
     </main>
@@ -78,6 +83,9 @@
   </div>
 
   <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <!-- Markdown renderer for blog posts that live as .md files -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <script>
     (function () {
@@ -128,6 +136,275 @@
       if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
       }
+    })();
+  </script>
+
+  <script>
+    // Blog configuration: Yuque-style folders on the left, content on the right.
+    // type: "markdown" (render local .md), "external" (Yuque/WeChat link), "pdf" (if you later host PDFs in this repo).
+    const blogTree = [
+      {
+        id: "group-yuque",
+        label: "Yuque · 语雀文档",
+        children: [
+          {
+            id: "yuque-1",
+            title: "语雀 · 文章一",
+            type: "external",
+            url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/th6do2boncyf3qt4",
+            tags: ["yuque", "notes"],
+          },
+          {
+            id: "yuque-2",
+            title: "语雀 · 文章二",
+            type: "external",
+            url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/vtg9p1zqub32dlvh",
+            tags: ["yuque", "notes"],
+          },
+          // 示例：当你把语雀导出的 Markdown 放到 blog/ 目录后，可以改成:
+          // {
+          //   id: "yuque-md-1",
+          //   title: "语雀导出 · 某篇文章",
+          //   type: "markdown",
+          //   path: "blog/yuque-article-1.md",
+          //   tags: ["yuque", "markdown"],
+          // },
+        ],
+      },
+      {
+        id: "group-course-notes",
+        label: "Course notes · 课程笔记（公众号 PDF）",
+        children: [
+          {
+            id: "wechat-course-1",
+            title: "课程笔记 · 公众号一",
+            type: "external",
+            url: "https://mp.weixin.qq.com/s/nyXtBTOnbU9NWVm_4jZ0Zg",
+            tags: ["wechat", "course"],
+          },
+          {
+            id: "wechat-course-2",
+            title: "课程笔记 · 公众号二",
+            type: "external",
+            url: "https://mp.weixin.qq.com/s/CRaVWpb8NDSBtxxAg-EZ9w",
+            tags: ["wechat", "course"],
+          },
+          // 如果你之后把公众号笔记下载为 PDF 并上传到仓库，可以改成:
+          // {
+          //   id: "course-pdf-1",
+          //   title: "课程笔记 PDF · 某门课",
+          //   type: "pdf",
+          //   path: "blog/course-notes-1.pdf",
+          //   tags: ["course", "pdf"],
+          // },
+        ],
+      },
+      {
+        id: "group-local",
+        label: "Local posts · 本地文章示例",
+        children: [
+          // 示例：本地 Markdown 博文。你可以把 blog/first_post.md 或其他 .md 文件挂在这里。
+          // {
+          //   id: "local-first-post",
+          //   title: "My first robotics blog",
+          //   type: "markdown",
+          //   path: "blog/first_post.md",
+          //   tags: ["example", "robotics"],
+          // },
+        ],
+      },
+    ];
+
+    (function () {
+      const treeContainer = document.getElementById("blog-tree-container");
+      const detailInner = document.getElementById("blog-detail-inner");
+      const searchInput = document.getElementById("blog-search-input");
+
+      let activeId = null;
+      const cache = new Map(); // id -> { text, html }
+
+      function flattenNodes(tree) {
+        const out = [];
+        tree.forEach(group => {
+          (group.children || []).forEach(node => out.push(node));
+        });
+        return out;
+      }
+
+      function renderTree(filteredIds) {
+        const filterSet = filteredIds ? new Set(filteredIds) : null;
+        const parts = [];
+
+        blogTree.forEach(group => {
+          const groupChildren = (group.children || []).filter(n => !filterSet || filterSet.has(n.id));
+          if (!groupChildren.length && filterSet) {
+            return;
+          }
+          parts.push(`
+            <div class="notes-list-group">
+              <div class="notes-list-title-row" style="margin-bottom:4px;">
+                <span class="notes-list-title">${group.label}</span>
+              </div>
+          `);
+
+          groupChildren.forEach(node => {
+            const isActive = node.id === activeId;
+            const tags = (node.tags || []).map(t => `<span class="chip notes-chip">${t}</span>`).join("");
+            parts.push(`
+              <button class="notes-list-item${isActive ? " notes-list-item-active" : ""}" data-id="${node.id}">
+                <div class="notes-list-title-row">
+                  <span class="notes-list-title">${node.title}</span>
+                  ${node.type === "markdown" ? `<span class="notes-badge">MD</span>` : ""}
+                  ${node.type === "pdf" ? `<span class="notes-badge">PDF</span>` : ""}
+                  ${node.type === "external" ? `<span class="notes-badge">Link</span>` : ""}
+                </div>
+                ${tags ? `<div class="notes-list-tags">${tags}</div>` : ""}
+              </button>
+            `);
+          });
+
+          parts.push(`</div>`);
+        });
+
+        if (!parts.length) {
+          treeContainer.innerHTML = '<div class="muted">No blog posts configured yet. / 还没有配置任何博客文章。</div>';
+        } else {
+          treeContainer.innerHTML = parts.join("");
+        }
+      }
+
+      function setDetail(html) {
+        detailInner.innerHTML = html;
+      }
+
+      async function openNode(node) {
+        if (!node) return;
+        activeId = node.id;
+        renderTree();
+
+        if (node.type === "external") {
+          const safeUrl = node.url || "#";
+          setDetail(`
+            <h2 class="notes-detail-title">${node.title}</h2>
+            <div class="notes-detail-meta muted">
+              <span class="notes-badge">External</span>
+              ${node.tags && node.tags.length ? `<span class="notes-meta-tags">${node.tags.join(" · ")}</span>` : ""}
+            </div>
+            <p class="muted">
+              This article is hosted on an external platform (Yuque / WeChat, etc.). Click the link
+              below to open it in a new tab.<br>
+              该文章托管在外部平台（如语雀、微信公众号等），点击下方链接在新标签页中打开。
+            </p>
+            <p>
+              <a class="btn btn-primary" href="${safeUrl}" target="_blank" rel="noreferrer">
+                <span class="btn-icon-dot"></span>
+                <span>Open external article / 打开外部文章</span>
+              </a>
+            </p>
+          `);
+          return;
+        }
+
+        if (node.type === "pdf") {
+          const path = node.path;
+          setDetail(`
+            <h2 class="notes-detail-title">${node.title}</h2>
+            <div class="notes-detail-meta muted">
+              <span class="notes-badge">PDF</span>
+              ${node.tags && node.tags.length ? `<span class="notes-meta-tags">${node.tags.join(" · ")}</span>` : ""}
+            </div>
+            <div class="cv-viewer" style="margin-top:8px; max-height:540px;">
+              <iframe src="${path}" class="cv-iframe" title="${node.title}" loading="lazy"></iframe>
+              <div class="cv-viewer-fallback muted">
+                If the PDF viewer does not load, you can
+                <a href="${path}" target="_blank" rel="noreferrer">open it in a new tab</a>.<br>
+                如果预览失败，可以点击链接在新标签页中打开。
+              </div>
+            </div>
+          `);
+          return;
+        }
+
+        if (node.type === "markdown") {
+          setDetail(`<p class="muted">Loading <strong>${node.title}</strong>…</p>`);
+          try {
+            if (cache.has(node.id) && cache.get(node.id).html) {
+              setDetail(cache.get(node.id).html);
+              return;
+            }
+            const res = await fetch(node.path + "?_=" + Date.now());
+            if (!res.ok) throw new Error("Failed to load: " + res.statusText);
+            const text = await res.text();
+            const html = `
+              <h2 class="notes-detail-title">${node.title}</h2>
+              <div class="notes-detail-meta muted">
+                <span class="notes-badge">Markdown</span>
+                ${node.tags && node.tags.length ? `<span class="notes-meta-tags">${node.tags.join(" · ")}</span>` : ""}
+              </div>
+              <div class="notes-markdown">
+                ${window.marked ? window.marked.parse(text) : "<pre>" + text.replace(/[&<>]/g, s => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[s])) + "</pre>"}
+              </div>
+            `;
+            cache.set(node.id, { text, html });
+            setDetail(html);
+          } catch (err) {
+            console.error(err);
+            setDetail(`<p class="muted">加载失败：${err}</p>`);
+          }
+        }
+      }
+
+      function filterIdsByQuery(query) {
+        const q = query.trim().toLowerCase();
+        if (!q) return null;
+        const ids = [];
+        const allNodes = flattenNodes(blogTree);
+        allNodes.forEach(node => {
+          const titleMatch = node.title && node.title.toLowerCase().includes(q);
+          const tagMatch = node.tags && node.tags.join(" ").toLowerCase().includes(q);
+          if (titleMatch || tagMatch) {
+            ids.push(node.id);
+          }
+        });
+        return ids;
+      }
+
+      // Initial tree
+      renderTree();
+
+      // URL hash: #post=xxx
+      const hashMatch = location.hash.match(/post=([^&]+)/);
+      if (hashMatch) {
+        const idFromHash = decodeURIComponent(hashMatch[1]);
+        const allNodes = flattenNodes(blogTree);
+        const node = allNodes.find(n => n.id === idFromHash);
+        if (node) {
+          openNode(node);
+        }
+      }
+
+      treeContainer.addEventListener("click", function (e) {
+        const button = e.target.closest(".notes-list-item");
+        if (!button) return;
+        const id = button.getAttribute("data-id");
+        const allNodes = flattenNodes(blogTree);
+        const node = allNodes.find(n => n.id === id);
+        if (node) {
+          history.replaceState(null, "", "#post=" + encodeURIComponent(node.id));
+          openNode(node);
+        }
+      });
+
+      // Search
+      let searchTimer = null;
+      searchInput.addEventListener("input", function () {
+        const value = searchInput.value;
+        if (searchTimer) clearTimeout(searchTimer);
+        searchTimer = setTimeout(function () {
+          const ids = filterIdsByQuery(value);
+          renderTree(ids);
+        }, 150);
+      });
     })();
   </script>
 
