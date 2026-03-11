@@ -207,10 +207,15 @@
       const collapsedGroups = new Set(); // group ids that are collapsed (default: all collapsed)
 
       function preprocessMathForBlock(text) {
+        var blockDelim = "$$";
+        function toBlock(m, g1, g2) {
+          return blockDelim + "\n\\begin{" + g1 + "}" + g2 + "\\end{" + g1 + "}\n" + blockDelim;
+        }
         return text
-          .replace(/\$\s*\\begin\{([\w*]+)\}([\s\S]*?)\\end\{\1\}\s*\$/g, "$$$$\n\\begin{$1}$2\\end{$1}\n$$$$")
-          .replace(/\$\$\s*\\begin\{([\w*]+)\}([\s\S]*?)\\end\{\1\}\s*\$\$/g, "$$$$\n\\begin{$1}$2\\end{$1}\n$$$$")
-          .replace(/\$\s*([^$]*?\\begin\{(bmatrix|vmatrix|cases|pmatrix|matrix)\}[\s\S]*?\\end\{\2\}[^$]*?)\s*\$/g, "$$$$\n$1\n$$$$");
+          .replace(/\$\s*\\begin\{([\w*]+)\}([\s\S]*?)\\end\{\1\}\s*\$/g, toBlock)
+          .replace(/\$\$\s*\\begin\{([\w*]+)\}([\s\S]*?)\\end\{\1\}\s*\$\$/g, toBlock)
+          .replace(/(^|\n)(\$\$)\s+/gm, "$1$2\n")
+          .replace(/\s+(\$\$)(\n|$)/gm, "\n$1$2");
       }
 
       function flattenNodes(tree) {
