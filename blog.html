@@ -38,10 +38,10 @@
           <div class="panel-header">
             <div>
               <div class="panel-chip">Blog · 博客与文章</div>
-              <h1 class="panel-title">Notes from the lab</h1>
+              <h1 class="panel-title">Yuque docs &amp; tech schemes · 语雀文档与技术方案</h1>
               <p class="panel-subtitle">
-                A Yuque-style two-pane blog: folders and posts on the left, content on the right.<br>
-                模仿语雀的双栏界面：左侧是文档分组和列表，右侧是正文区域。
+                Yuque-style two-pane layout: folders and links on the left, content preview on the right.<br>
+                语雀风格双栏布局：左侧分组与链接，右侧内容预览。
               </p>
             </div>
           </div>
@@ -66,9 +66,9 @@
               <div id="blog-detail-inner" class="notes-detail-inner">
                 <h2 class="notes-detail-title">Select a post / 选择一篇文章</h2>
                 <p class="muted">
-                  左侧展示的是类似语雀的分组与文档列表：<br>
-                  - 可以把语雀导出的 Markdown 放在 <code>blog/</code> 或 <code>notes/</code> 中，并在下方配置中登记；<br>
-                  - 专业课程笔记（公众号链接）点击后在新标签页中打开阅读。
+                  左侧展示语雀文档与技术方案分组：<br>
+                  - 点击分组标题可展开/收起；<br>
+                  - 点击文章可在右侧预览或在新标签页中打开。
                 </p>
               </div>
             </article>
@@ -79,7 +79,7 @@
 
     <footer class="page-footer">
       <span>© <span id="year-span"></span> DeviatedZHR.</span>
-      <span class="muted">Blog · small, practical robotics notes.</span>
+      <span class="muted">Blog · 博客 · 语雀文档与技术方案</span>
     </footer>
   </div>
 
@@ -143,73 +143,9 @@
   </script>
 
   <script>
-    // Blog configuration: Yuque-style folders on the left, content on the right.
-    // type: "markdown" (render local .md), "external" (Yuque/WeChat link), "pdf" (PDF files in this repo).
+    // Blog configuration: Yuque docs and tech schemes only.
+    // type: "external" (Yuque/WeChat link).
     const blogTree = [
-      {
-        id: "group-quadruped",
-        label: "Quadruped Robot · 四足机器人",
-        children: [
-          {
-            id: "quad-kinematics",
-            title: "四足机器人运动学分析",
-            type: "markdown",
-            path: "blog/Quadruped_Robot/四足机器人运动学分析.md",
-            tags: ["quadruped", "robotics"],
-          },
-          {
-            id: "quad-dynamics",
-            title: "四足机器人动力学分析",
-            type: "markdown",
-            path: "blog/Quadruped_Robot/四足机器人动力学分析.md",
-            tags: ["quadruped", "dynamics"],
-          },
-          {
-            id: "quad-jacobian",
-            title: "四足机器人雅可比矩阵静力学",
-            type: "markdown",
-            path: "blog/Quadruped_Robot/四足机器人雅可比矩阵静力学.md",
-            tags: ["quadruped", "jacobian"],
-          },
-        ],
-      },
-      {
-        id: "group-rm-induction",
-        label: "RoboMaster Induction · 新生培训",
-        children: [
-          {
-            id: "rm-induction-cubemx-git",
-            title: "CubeMx+Git 入门 - 考核",
-            type: "markdown",
-            path: "blog/RM_Induction_Training/CubeMx+Git入门-考核.md",
-            tags: ["RoboMaster", "induction"],
-          },
-          {
-            id: "rm-induction-first-stage",
-            title: "电控软件新生第一阶段适应性任务",
-            type: "markdown",
-            path: "blog/RM_Induction_Training/电控软件新生第一阶段适应性任务.md",
-            tags: ["RoboMaster", "induction"],
-          },
-        ],
-      },
-      {
-        id: "group-professional-courses",
-        label: "Professional course notes · 专业课程笔记",
-        children: [
-          { id: "course-math-up", title: "《工科数学分析（上）》部分笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/cpvr7uwMr0F4zHKmrBJu4g", tags: ["微积分", "数学"] },
-          { id: "course-linear-alg", title: "《线性代数与空间解析几何》部分笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/YS9hS1WBg7QgjLpj9NarBA", tags: ["线性代数", "数学"] },
-          { id: "course-math-down", title: "《工科数学分析（下）》笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/vh4gPtmE3MfvgMX7R8vpfg", tags: ["微积分", "数学"] },
-          { id: "course-physics-up", title: "《大学物理教程（上）》笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/0bUal67M7AfzipSAE427Jg", tags: ["大学物理", "物理"] },
-          { id: "course-complex", title: "《复变函数与积分变换》自学笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/BdONmTivOsqZeFR_sRO16w", tags: ["复变函数", "数学"] },
-          { id: "course-elec-up", title: "电工学（上）复习", type: "external", url: "https://mp.weixin.qq.com/s/kTxu6umJ7VCvPFVVbyjoAQ", tags: ["电工学", "电学"] },
-          { id: "course-prob", title: "概率论与数理统计 复习", type: "external", url: "https://mp.weixin.qq.com/s/jAZqW0jr8r5nhv8N7cC4Dw", tags: ["概率论", "数学"] },
-          { id: "course-physics-down", title: "大学物理（下） 复习", type: "external", url: "https://mp.weixin.qq.com/s/eaIMIQe_A4R1oX6B24lxhw", tags: ["大学物理", "物理"] },
-          { id: "course-elec-down", title: "电工学（下） 复习", type: "external", url: "https://mp.weixin.qq.com/s/S9KyxQN1WmKDvVu6saKLnA", tags: ["电工学", "电学"] },
-          { id: "course-mechanics", title: "材料力学 复习", type: "external", url: "https://mp.weixin.qq.com/s/CRaVWpb8NDSBtxxAg-EZ9w", tags: ["材料力学", "力学"] },
-          { id: "course-mechatronics", title: "机电系统控制基础 复习", type: "external", url: "https://mp.weixin.qq.com/s/nyXtBTOnbU9NWVm_4jZ0Zg", tags: ["机电控制", "控制"] },
-        ],
-      },
       {
         id: "group-yuque",
         label: "Yuque · 语雀文档 / 技术方案",
@@ -248,6 +184,7 @@
 
       let activeId = null;
       const cache = new Map(); // id -> { text, html }
+      const collapsedGroups = new Set(); // group ids that are collapsed (default: all collapsed)
 
       function flattenNodes(tree) {
         const out = [];
@@ -266,11 +203,16 @@
           if (!groupChildren.length && filterSet) {
             return;
           }
+          const isCollapsed = collapsedGroups.has(group.id);
+          const hasFilter = !!filterSet;
+          const showChildren = !isCollapsed || hasFilter;
           parts.push(`
-            <div class="notes-list-group">
-              <div class="notes-list-title-row" style="margin-bottom:4px;">
+            <div class="notes-list-group" data-group-id="${group.id}">
+              <button type="button" class="notes-group-toggle" data-group-id="${group.id}" aria-expanded="${!isCollapsed}">
+                <span class="notes-group-chevron">${isCollapsed ? "▶" : "▼"}</span>
                 <span class="notes-list-title">${group.label}</span>
-              </div>
+              </button>
+              <div class="notes-group-children" style="display:${showChildren ? "block" : "none"}">
           `);
 
           groupChildren.forEach(node => {
@@ -289,7 +231,7 @@
             `);
           });
 
-          parts.push(`</div>`);
+          parts.push(`</div></div>`);
         });
 
         if (!parts.length) {
@@ -374,19 +316,15 @@
             if (!res.ok) throw new Error("Failed to load: " + res.statusText);
             const text = await res.text();
             const basePath = node.path.replace(/\/[^/]+$/, "/");
-            const esc = (s) => (s || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;");
-            const renderer = {
-              image(tok) {
-                let href = tok.href ?? tok[0];
-                const title = tok.title ?? tok[1];
-                const alt = tok.text ?? tok[2];
-                if (href && !href.startsWith("http") && !href.startsWith("/")) {
-                  href = basePath + href.replace(/^\.\//, "");
+            const opts = {
+              gfm: true,
+              breaks: true,
+              walkTokens(token) {
+                if (token.type === "image" && token.href && !token.href.startsWith("http") && !token.href.startsWith("/")) {
+                  token.href = basePath + token.href.replace(/^\.\//, "");
                 }
-                return `<img src="${esc(href)}" alt="${esc(alt)}"${title ? ` title="${esc(title)}"` : ""}>`;
               },
             };
-            const opts = { gfm: true, breaks: true, renderer };
             const rawHtml = window.marked ? window.marked.parse(text, opts) : "<pre>" + text.replace(/[&<>]/g, s => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[s])) + "</pre>";
             const html = `
               <h2 class="notes-detail-title">${node.title}</h2>
@@ -424,8 +362,28 @@
         return ids;
       }
 
+      // Initialize all groups as collapsed
+      blogTree.forEach(g => collapsedGroups.add(g.id));
+
       // Initial tree
       renderTree();
+
+      // Toggle group expand/collapse
+      treeContainer.addEventListener("click", function (e) {
+        const toggleBtn = e.target.closest(".notes-group-toggle");
+        if (toggleBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          const gid = toggleBtn.getAttribute("data-group-id");
+          if (collapsedGroups.has(gid)) {
+            collapsedGroups.delete(gid);
+          } else {
+            collapsedGroups.add(gid);
+          }
+          renderTree();
+          return;
+        }
+      });
 
       // URL hash: #post=xxx
       const hashMatch = location.hash.match(/post=([^&]+)/);
@@ -439,6 +397,7 @@
       }
 
       treeContainer.addEventListener("click", function (e) {
+        if (e.target.closest(".notes-group-toggle")) return;
         const button = e.target.closest(".notes-list-item");
         if (!button) return;
         const id = button.getAttribute("data-id");

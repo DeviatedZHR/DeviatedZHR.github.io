@@ -64,16 +64,11 @@
 
             <article class="notes-detail" aria-label="Note content">
               <div id="notes-detail-inner" class="notes-detail-inner">
-                <h2 class="notes-detail-title">Select a note</h2>
+                <h2 class="notes-detail-title">Select a note / 选择一篇笔记</h2>
                 <p class="muted">
                   在左侧搜索或点击某一篇笔记，这里会以 Markdown 渲染的方式展示全文。<br>
-                  建议做法：
+                  点击分组标题可展开/收起。
                 </p>
-                <ul class="muted">
-                  <li>把从微信公众号导出的文章整理成 Markdown，放在 <code>notes/</code> 目录。</li>
-                  <li>把语雀文档导出为 Markdown，同样放进 <code>notes/</code>。</li>
-                  <li>然后在本页面底部的 <code>notesConfig</code> 里登记标题、路径和标签。</li>
-                </ul>
               </div>
             </article>
           </div>
@@ -83,7 +78,7 @@
 
     <footer class="page-footer">
       <span>© <span id="year-span"></span> DeviatedZHR.</span>
-      <span class="muted">Notes · two-pane reader with search.</span>
+      <span class="muted">Notes · 笔记 · 双栏阅读与搜索</span>
     </footer>
   </div>
 
@@ -147,54 +142,49 @@
   </script>
 
   <script>
-    // Configuration of notes: you can extend this array with your own entries.
-    // Put Markdown files under /notes, then add one object here for each article.
-    const notesConfig = [
+    // Notes configuration: grouped structure. type: "markdown" | "external"
+    const notesTree = [
       {
-        id: "example-intro",
-        title: "示例：如何组织我的机器人学习笔记",
-        path: "notes/example-intro.md",
-        tags: ["example", "robotics", "workflow"],
-        source: "Markdown",
-        highlight: "Example",
+        id: "group-example",
+        label: "示例 · Example",
+        children: [
+          { id: "example-intro", title: "示例：如何组织我的机器人学习笔记", type: "markdown", path: "notes/example-intro.md", tags: ["example", "robotics", "workflow"] },
+        ],
       },
       {
-        id: "quad-kinematics",
-        title: "四足机器人运动学分析",
-        path: "blog/Quadruped_Robot/四足机器人运动学分析.md",
-        tags: ["quadruped", "robotics", "运动学"],
-        source: "Markdown",
+        id: "group-quadruped",
+        label: "Quadruped Robot · 四足机器人",
+        children: [
+          { id: "quad-kinematics", title: "四足机器人运动学分析", type: "markdown", path: "blog/Quadruped_Robot/四足机器人运动学分析.md", tags: ["quadruped", "robotics", "运动学"] },
+          { id: "quad-dynamics", title: "四足机器人动力学分析", type: "markdown", path: "blog/Quadruped_Robot/四足机器人动力学分析.md", tags: ["quadruped", "dynamics", "动力学"] },
+          { id: "quad-jacobian", title: "四足机器人雅可比矩阵静力学", type: "markdown", path: "blog/Quadruped_Robot/四足机器人雅可比矩阵静力学.md", tags: ["quadruped", "jacobian", "静力学"] },
+        ],
       },
       {
-        id: "quad-dynamics",
-        title: "四足机器人动力学分析",
-        path: "blog/Quadruped_Robot/四足机器人动力学分析.md",
-        tags: ["quadruped", "dynamics", "动力学"],
-        source: "Markdown",
+        id: "group-rm-induction",
+        label: "RoboMaster Induction · 新生培训",
+        children: [
+          { id: "rm-induction-cubemx-git", title: "CubeMx+Git 入门 - 考核", type: "markdown", path: "blog/RM_Induction_Training/CubeMx+Git入门-考核.md", tags: ["RoboMaster", "induction"] },
+          { id: "rm-induction-first-stage", title: "电控软件新生第一阶段适应性任务", type: "markdown", path: "blog/RM_Induction_Training/电控软件新生第一阶段适应性任务.md", tags: ["RoboMaster", "induction"] },
+        ],
       },
       {
-        id: "quad-jacobian",
-        title: "四足机器人雅可比矩阵静力学",
-        path: "blog/Quadruped_Robot/四足机器人雅可比矩阵静力学.md",
-        tags: ["quadruped", "jacobian", "静力学"],
-        source: "Markdown",
+        id: "group-professional-courses",
+        label: "Professional course notes · 专业课程笔记",
+        children: [
+          { id: "course-math-up", title: "《工科数学分析（上）》部分笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/cpvr7uwMr0F4zHKmrBJu4g", tags: ["微积分", "数学"] },
+          { id: "course-linear-alg", title: "《线性代数与空间解析几何》部分笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/YS9hS1WBg7QgjLpj9NarBA", tags: ["线性代数", "数学"] },
+          { id: "course-math-down", title: "《工科数学分析（下）》笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/vh4gPtmE3MfvgMX7R8vpfg", tags: ["微积分", "数学"] },
+          { id: "course-physics-up", title: "《大学物理教程（上）》笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/0bUal67M7AfzipSAE427Jg", tags: ["大学物理", "物理"] },
+          { id: "course-complex", title: "《复变函数与积分变换》自学笔记分享", type: "external", url: "https://mp.weixin.qq.com/s/BdONmTivOsqZeFR_sRO16w", tags: ["复变函数", "数学"] },
+          { id: "course-elec-up", title: "电工学（上）复习", type: "external", url: "https://mp.weixin.qq.com/s/kTxu6umJ7VCvPFVVbyjoAQ", tags: ["电工学", "电学"] },
+          { id: "course-prob", title: "概率论与数理统计 复习", type: "external", url: "https://mp.weixin.qq.com/s/jAZqW0jr8r5nhv8N7cC4Dw", tags: ["概率论", "数学"] },
+          { id: "course-physics-down", title: "大学物理（下） 复习", type: "external", url: "https://mp.weixin.qq.com/s/eaIMIQe_A4R1oX6B24lxhw", tags: ["大学物理", "物理"] },
+          { id: "course-elec-down", title: "电工学（下） 复习", type: "external", url: "https://mp.weixin.qq.com/s/S9KyxQN1WmKDvVu6saKLnA", tags: ["电工学", "电学"] },
+          { id: "course-mechanics", title: "材料力学 复习", type: "external", url: "https://mp.weixin.qq.com/s/CRaVWpb8NDSBtxxAg-EZ9w", tags: ["材料力学", "力学"] },
+          { id: "course-mechatronics", title: "机电系统控制基础 复习", type: "external", url: "https://mp.weixin.qq.com/s/nyXtBTOnbU9NWVm_4jZ0Zg", tags: ["机电控制", "控制"] },
+        ],
       },
-      // 示例：你可以添加一篇来自语雀导出的文档
-      // {
-      //   id: "yuque-some-topic",
-      //   title: "语雀：某个机器人控制笔记",
-      //   path: "notes/yuque-control-note.md",
-      //   tags: ["yuque", "control", "robotics"],
-      //   source: "Yuque",
-      // },
-      // 示例：你可以添加一篇来自公众号的文章
-      // {
-      //   id: "wechat-some-article",
-      //   title: "公众号：某次实验记录",
-      //   path: "notes/wechat-experiment-log.md",
-      //   tags: ["wechat", "experiment"],
-      //   source: "WeChat",
-      // },
     ];
 
     (function () {
@@ -203,36 +193,87 @@
       const searchInput = document.getElementById("notes-search-input");
 
       let activeId = null;
-      const cache = new Map(); // id -> { text, html }
+      const cache = new Map();
+      const collapsedGroups = new Set();
 
-      function renderList(filtered) {
-        const items = filtered || notesConfig;
-        if (!items.length) {
-          listContainer.innerHTML = '<div class="muted">No notes yet. Add Markdown files under <code>notes/</code> and update <code>notesConfig</code> in this page.</div>';
-          return;
-        }
+      function flattenNodes(tree) {
+        const out = [];
+        tree.forEach(group => (group.children || []).forEach(node => out.push(node)));
+        return out;
+      }
 
-        listContainer.innerHTML = items.map(note => {
-          const isActive = note.id === activeId;
-          const tags = (note.tags || []).map(t => `<span class="chip notes-chip">${t}</span>`).join("");
-          const badge = note.source ? `<span class="notes-badge">${note.source}</span>` : "";
-          return `
-            <button class="notes-list-item${isActive ? " notes-list-item-active" : ""}" data-id="${note.id}">
-              <div class="notes-list-title-row">
-                <span class="notes-list-title">${note.title}</span>
-                ${badge}
-              </div>
-              ${tags ? `<div class="notes-list-tags">${tags}</div>` : ""}
-            </button>
-          `;
-        }).join("");
+      function filterIdsByQuery(query) {
+        const q = query.trim().toLowerCase();
+        if (!q) return null;
+        const ids = [];
+        flattenNodes(notesTree).forEach(node => {
+          const titleMatch = node.title && node.title.toLowerCase().includes(q);
+          const tagMatch = node.tags && node.tags.join(" ").toLowerCase().includes(q);
+          if (titleMatch || tagMatch) ids.push(node.id);
+        });
+        return ids;
+      }
+
+      function renderList(filteredIds) {
+        const filterSet = filteredIds ? new Set(filteredIds) : null;
+        const parts = [];
+        notesTree.forEach(group => {
+          const groupChildren = (group.children || []).filter(n => !filterSet || filterSet.has(n.id));
+          if (!groupChildren.length && filterSet) return;
+          const isCollapsed = collapsedGroups.has(group.id);
+          const showChildren = !isCollapsed || !!filterSet;
+          parts.push(`
+            <div class="notes-list-group" data-group-id="${group.id}">
+              <button type="button" class="notes-group-toggle" data-group-id="${group.id}" aria-expanded="${!isCollapsed}">
+                <span class="notes-group-chevron">${isCollapsed ? "▶" : "▼"}</span>
+                <span class="notes-list-title">${group.label}</span>
+              </button>
+              <div class="notes-group-children" style="display:${showChildren ? "block" : "none"}">
+          `);
+          groupChildren.forEach(node => {
+            const isActive = node.id === activeId;
+            const tags = (node.tags || []).map(t => `<span class="chip notes-chip">${t}</span>`).join("");
+            const badge = node.type === "markdown" ? `<span class="notes-badge">MD</span>` : (node.type === "external" ? `<span class="notes-badge">Link</span>` : "");
+            parts.push(`
+              <button class="notes-list-item${isActive ? " notes-list-item-active" : ""}" data-id="${node.id}">
+                <div class="notes-list-title-row">
+                  <span class="notes-list-title">${node.title}</span>
+                  ${badge}
+                </div>
+                ${tags ? `<div class="notes-list-tags">${tags}</div>` : ""}
+              </button>
+            `);
+          });
+          parts.push(`</div></div>`);
+        });
+        listContainer.innerHTML = parts.length ? parts.join("") : '<div class="muted">No notes yet. / 还没有配置任何笔记。</div>';
       }
 
       async function loadNote(note) {
         if (!note) return;
         if (activeId === note.id && cache.has(note.id)) return;
         activeId = note.id;
-        renderList(); // update active state
+        renderList();
+
+        if (note.type === "external") {
+          const safeUrl = note.url || "#";
+          const isWechat = safeUrl.indexOf("mp.weixin.qq.com") !== -1;
+          detailInner.innerHTML = `
+            <h2 class="notes-detail-title">${note.title}</h2>
+            <div class="notes-detail-meta muted">
+              <span class="notes-badge">${isWechat ? "微信公众号" : "External"}</span>
+              ${note.tags && note.tags.length ? `<span class="notes-meta-tags">${note.tags.join(" · ")}</span>` : ""}
+            </div>
+            <div class="blog-external-card">
+              <p class="muted">该文章发布于微信公众号。微信限制第三方站点内嵌，请点击下方按钮在新标签页中阅读原文。</p>
+              <a class="btn btn-primary blog-external-btn" href="${safeUrl}" target="_blank" rel="noreferrer">
+                <span class="btn-icon-dot"></span>
+                <span>在新标签页中打开 / Open in new tab</span>
+              </a>
+            </div>
+          `;
+          return;
+        }
 
         detailInner.innerHTML = `<p class="muted">Loading <strong>${note.title}</strong>…</p>`;
 
@@ -247,29 +288,23 @@
             return;
           }
           const res = await fetch(note.path + "?_=" + Date.now());
-          if (!res.ok) {
-            throw new Error("Failed to load: " + res.statusText);
-          }
+          if (!res.ok) throw new Error("Failed to load: " + res.statusText);
           const text = await res.text();
           const basePath = note.path.replace(/\/[^/]+$/, "/");
-          const esc = (s) => (s || "").replace(/&/g, "&amp;").replace(/"/g, "&quot;");
-          const renderer = {
-            image(tok) {
-              let href = tok.href ?? tok[0];
-              const title = tok.title ?? tok[1];
-              const alt = tok.text ?? tok[2];
-              if (href && !href.startsWith("http") && !href.startsWith("/")) {
-                href = basePath + href.replace(/^\.\//, "");
+          const opts = {
+            gfm: true,
+            breaks: true,
+            walkTokens(token) {
+              if (token.type === "image" && token.href && !token.href.startsWith("http") && !token.href.startsWith("/")) {
+                token.href = basePath + token.href.replace(/^\.\//, "");
               }
-              return `<img src="${esc(href)}" alt="${esc(alt)}"${title ? ` title="${esc(title)}"` : ""}>`;
             },
           };
-          const opts = { gfm: true, breaks: true, renderer };
           const rawHtml = window.marked ? window.marked.parse(text, opts) : "<pre>" + text.replace(/[&<>]/g, s => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[s])) + "</pre>";
           const html = `
             <h2 class="notes-detail-title">${note.title}</h2>
             <div class="notes-detail-meta muted">
-              ${note.source ? `<span class="notes-badge">${note.source}</span>` : ""}
+              <span class="notes-badge">Markdown</span>
               ${(note.tags && note.tags.length) ? "<span class=\"notes-meta-tags\">" + note.tags.join(" · ") + "</span>" : ""}
             </div>
             <div class="notes-markdown">${rawHtml}</div>
@@ -287,96 +322,58 @@
         }
       }
 
-      function filterNotes(query) {
-        const q = query.trim().toLowerCase();
-        if (!q) return notesConfig;
-
-        const results = [];
-        const promises = [];
-
-        notesConfig.forEach(note => {
-          const basicMatch =
-            (note.title && note.title.toLowerCase().includes(q)) ||
-            (note.tags && note.tags.join(" ").toLowerCase().includes(q)) ||
-            (note.source && note.source.toLowerCase().includes(q));
-
-          if (basicMatch) {
-            results.push(note);
-            return;
-          }
-
-          if (cache.has(note.id)) {
-            const cached = cache.get(note.id);
-            if (cached.text && cached.text.toLowerCase().includes(q)) {
-              results.push(note);
-            }
-            return;
-          }
-
-          // Lazy-load content for search
-          const p = fetch(note.path + "?_search=" + Date.now())
-            .then(res => res.ok ? res.text() : "")
-            .then(text => {
-              cache.set(note.id, { text, html: null });
-              if (text.toLowerCase().includes(q)) {
-                results.push(note);
-              }
-            })
-            .catch(() => {});
-          promises.push(p);
-        });
-
-        if (!promises.length) {
-          return results;
-        }
-
-        // We'll optimistically render based on title/tag first, then re-render after content search completes.
-        Promise.all(promises).then(() => {
-          const finalResults = filterNotes(query);
-          renderList(finalResults);
-        });
-
-        return results;
+      function getAllNodes() {
+        return flattenNodes(notesTree);
       }
+
+      // Initialize all groups as collapsed
+      notesTree.forEach(g => collapsedGroups.add(g.id));
 
       // Initial render
       renderList();
 
-      // If URL has hash like #note=example-intro, auto-open it
-      const hashMatch = location.hash.match(/note=([^&]+)/);
-      if (hashMatch) {
-        const idFromHash = decodeURIComponent(hashMatch[1]);
-        const note = notesConfig.find(n => n.id === idFromHash);
-        if (note) {
-          loadNote(note);
-        }
-      } else if (notesConfig[0]) {
-        // Optionally auto-open first note
-        // loadNote(notesConfig[0]);
-      }
-
-      // List click handler
+      // Toggle group expand/collapse
       listContainer.addEventListener("click", function (e) {
-        const button = e.target.closest(".notes-list-item");
-        if (!button) return;
-        const id = button.getAttribute("data-id");
-        const note = notesConfig.find(n => n.id === id);
-        if (note) {
-          history.replaceState(null, "", "#note=" + encodeURIComponent(note.id));
-          loadNote(note);
+        const toggleBtn = e.target.closest(".notes-group-toggle");
+        if (toggleBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          const gid = toggleBtn.getAttribute("data-group-id");
+          if (collapsedGroups.has(gid)) collapsedGroups.delete(gid);
+          else collapsedGroups.add(gid);
+          renderList();
+          return;
         }
       });
 
-      // Search handler (debounced)
+      // URL hash: #note=xxx
+      const hashMatch = location.hash.match(/note=([^&]+)/);
+      if (hashMatch) {
+        const idFromHash = decodeURIComponent(hashMatch[1]);
+        const node = getAllNodes().find(n => n.id === idFromHash);
+        if (node) loadNote(node);
+      }
+
+      // List item click
+      listContainer.addEventListener("click", function (e) {
+        if (e.target.closest(".notes-group-toggle")) return;
+        const button = e.target.closest(".notes-list-item");
+        if (!button) return;
+        const id = button.getAttribute("data-id");
+        const node = getAllNodes().find(n => n.id === id);
+        if (node) {
+          history.replaceState(null, "", "#note=" + encodeURIComponent(node.id));
+          loadNote(node);
+        }
+      });
+
+      // Search
       let searchTimer = null;
       searchInput.addEventListener("input", function () {
         const value = searchInput.value;
-        if (searchTimer) {
-          clearTimeout(searchTimer);
-        }
+        if (searchTimer) clearTimeout(searchTimer);
         searchTimer = setTimeout(function () {
-          const filtered = filterNotes(value);
-          renderList(filtered);
+          renderList(filterIdsByQuery(value));
         }, 160);
       });
     })();

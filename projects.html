@@ -81,6 +81,11 @@
 
           </div>
 
+          <!-- 战队介绍 PDF 配置：将 PDF 放入 files/ 目录后，在此填写路径即可展示，留空则不显示 -->
+          <script>
+            window.TEAM_INTRO_PDF_PATH = "files/team_intro.pdf";
+          </script>
+
           <div class="page-section-title" style="margin-top: 22px;">RoboMaster · RoboMaster 专栏</div>
           <p class="page-section-subtitle">
             Information about the RoboMaster competition, my team, and related videos / write-ups.<br>
@@ -104,6 +109,32 @@
                   news.<br>
                   RoboMaster 官方赛事信息，包括规则手册、赛题介绍与相关新闻。
                 </p>
+              </div>
+            </article>
+
+            <article class="card" id="team-intro-pdf-card" style="display: none;">
+              <div class="card-content">
+                <div class="card-badge-row">
+                  <span class="chip chip-strong">Team</span>
+                  <span class="chip">PDF</span>
+                </div>
+                <h2 class="card-title">战队介绍 · Team intro (PDF)</h2>
+                <p class="card-meta">
+                  战队介绍文档，可在下方预览或下载。<br>
+                  Team introduction document, view below or download.
+                </p>
+                <div class="cv-viewer" style="margin-top:8px; max-height:540px;">
+                  <iframe id="team-pdf-iframe" class="cv-iframe" style="min-height:480px; border-radius:10px;" title="战队介绍 PDF"></iframe>
+                  <div class="cv-viewer-fallback muted">
+                    若预览失败，请 <a id="team-pdf-download" href="#" target="_blank" rel="noreferrer">点击此处下载</a> 或在新标签页中打开。
+                  </div>
+                </div>
+                <div class="btn-row" style="margin-top:10px;">
+                  <a class="btn btn-primary" id="team-pdf-open-btn" href="#" target="_blank" rel="noreferrer">
+                    <span class="btn-icon-dot"></span>
+                    <span>在新标签页中打开 / Open in new tab</span>
+                  </a>
+                </div>
               </div>
             </article>
 
@@ -170,7 +201,7 @@
 
     <footer class="page-footer">
       <span>© <span id="year-span"></span> DeviatedZHR.</span>
-      <span class="muted">Projects page · robotics experiments &amp; demos.</span>
+      <span class="muted">Projects · 项目 · 机器人实验与演示</span>
     </footer>
   </div>
 
@@ -224,6 +255,20 @@
       const yearSpan = document.getElementById("year-span");
       if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
+      }
+
+      // 战队介绍 PDF：若 TEAM_INTRO_PDF_PATH 已配置，则显示预览
+      const pdfPath = window.TEAM_INTRO_PDF_PATH || "";
+      const pdfCard = document.getElementById("team-intro-pdf-card");
+      const pdfIframe = document.getElementById("team-pdf-iframe");
+      const pdfDownload = document.getElementById("team-pdf-download");
+      const pdfOpenBtn = document.getElementById("team-pdf-open-btn");
+      if (pdfPath && pdfCard && pdfIframe) {
+        pdfCard.style.display = "block";
+        const fullUrl = (location.origin + "/" + pdfPath.replace(/^\//, "")).replace(/([^:])\/+/g, "$1/");
+        pdfIframe.src = fullUrl;
+        if (pdfDownload) { pdfDownload.href = fullUrl; }
+        if (pdfOpenBtn) { pdfOpenBtn.href = fullUrl; }
       }
     })();
   </script>

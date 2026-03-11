@@ -784,6 +784,46 @@ body.docsify-root #app {
     margin-top: 6px;
 }
 
+.notes-group-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    margin-bottom: 2px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--transition-fast);
+}
+
+.notes-group-toggle:hover {
+    background: rgba(15, 23, 42, 0.7);
+}
+
+[data-theme="light"] .notes-group-toggle:hover {
+    background: #eff6ff;
+}
+
+.notes-group-chevron {
+    font-size: 10px;
+    opacity: 0.8;
+    flex-shrink: 0;
+}
+
+.notes-group-children {
+    padding-left: 10px;
+}
+
+.notes-list-group {
+    margin-bottom: 8px;
+}
+
 .notes-list {
     border-radius: 14px;
     border: 1px solid rgba(148, 163, 184, 0.6);
