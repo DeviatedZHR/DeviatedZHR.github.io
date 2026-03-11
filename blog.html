@@ -93,6 +93,21 @@
     if (window.marked && window.markedKatex) {
       marked.use(markedKatex({ throwOnError: false, nonStandard: true }));
     }
+    if (window.marked) {
+      marked.use({
+        renderer: {
+          image({ href, title, text }) {
+            if (href && href.indexOf('cdn.nlark.com') !== -1) {
+              href = 'https://images.weserv.nl/?url=' + encodeURIComponent(href);
+            }
+            const attrs = ['src="' + (href || '') + '"', 'alt="' + (text || '').replace(/"/g, '&quot;') + '"'];
+            if (title) attrs.push('title="' + title.replace(/"/g, '&quot;') + '"');
+            if (href && href.indexOf('images.weserv.nl') !== -1) attrs.push('referrerpolicy="no-referrer"');
+            return '<img ' + attrs.join(' ') + '>';
+          }
+        }
+      });
+    }
   </script>
 
   <script>
@@ -192,8 +207,10 @@
       const collapsedGroups = new Set(); // group ids that are collapsed (default: all collapsed)
 
       function preprocessMathForBlock(text) {
-        return text.replace(/\$\s*\\begin\{(\w+)\}([\s\S]*?)\\end\{\1\}\s*\$/g, "$$$$\n\\begin{$1}$2\\end{$1}\n$$$$")
-          .replace(/\$\$\s*\\begin\{(\w+)\}([\s\S]*?)\\end\{\1\}\s*\$\$/g, "$$$$\n\\begin{$1}$2\\end{$1}\n$$$$");
+        return text
+          .replace(/\$\s*\\begin\{([\w*]+)\}([\s\S]*?)\\end\{\1\}\s*\$/g, "$$$$\n\\begin{$1}$2\\end{$1}\n$$$$")
+          .replace(/\$\$\s*\\begin\{([\w*]+)\}([\s\S]*?)\\end\{\1\}\s*\$\$/g, "$$$$\n\\begin{$1}$2\\end{$1}\n$$$$")
+          .replace(/\$\s*([^$]*?\\begin\{(bmatrix|vmatrix|cases|pmatrix|matrix)\}[\s\S]*?\\end\{\2\}[^$]*?)\s*\$/g, "$$$$\n$1\n$$$$");
       }
 
       function flattenNodes(tree) {
