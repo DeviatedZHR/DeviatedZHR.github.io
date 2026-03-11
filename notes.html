@@ -174,30 +174,23 @@
         .replace(/\s+(\$\$)(\n|$)/gm, "\n$1$2");
     }
 
-    // Notes configuration: grouped structure. type: "markdown" | "external"
+    // Notes configuration: 内嵌语雀文档 + 微信公众号链接
     const notesTree = [
-      {
-        id: "group-example",
-        label: "示例 · Example",
-        children: [
-          { id: "example-intro", title: "示例：如何组织我的机器人学习笔记", type: "markdown", path: "notes/example-intro.md", tags: ["example", "robotics", "workflow"] },
-        ],
-      },
       {
         id: "group-quadruped",
         label: "Quadruped Robot · 四足机器人",
         children: [
-          { id: "quad-kinematics", title: "四足机器人运动学分析", type: "markdown", path: "blog/Quadruped_Robot/四足机器人运动学分析.md", tags: ["quadruped", "robotics", "运动学"] },
-          { id: "quad-dynamics", title: "四足机器人动力学分析", type: "markdown", path: "blog/Quadruped_Robot/四足机器人动力学分析.md", tags: ["quadruped", "dynamics", "动力学"] },
-          { id: "quad-jacobian", title: "四足机器人雅可比矩阵静力学", type: "markdown", path: "blog/Quadruped_Robot/四足机器人雅可比矩阵静力学.md", tags: ["quadruped", "jacobian", "静力学"] },
+          { id: "quad-kinematics", title: "四足机器人运动学分析", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/th6do2boncyf3qt4", tags: ["quadruped", "robotics", "运动学"] },
+          { id: "quad-jacobian", title: "四足机器人雅可比矩阵静力学", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/vtg9p1zqub32dlvh", tags: ["quadruped", "jacobian", "静力学"] },
+          { id: "quad-dynamics", title: "四足机器人动力学分析", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/ksp0tsz40ek7hiis", tags: ["quadruped", "dynamics", "动力学"] },
         ],
       },
       {
         id: "group-rm-induction",
         label: "RoboMaster Induction · 新生培训",
         children: [
-          { id: "rm-induction-cubemx-git", title: "CubeMx+Git 入门 - 考核", type: "markdown", path: "blog/RM_Induction_Training/CubeMx+Git入门-考核.md", tags: ["RoboMaster", "induction"] },
-          { id: "rm-induction-first-stage", title: "电控软件新生第一阶段适应性任务", type: "markdown", path: "blog/RM_Induction_Training/电控软件新生第一阶段适应性任务.md", tags: ["RoboMaster", "induction"] },
+          { id: "rm-induction-first-stage", title: "电控软件新生第一阶段适应性任务", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/sdyxnvko3wlce6ak", tags: ["RoboMaster", "induction"] },
+          { id: "rm-induction-cubemx-git", title: "CubeMx+Git入门-考核", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/dxq8xo98vzscl702", tags: ["RoboMaster", "induction"] },
         ],
       },
       {
@@ -293,9 +286,10 @@
           detailInner.innerHTML = `
             <h2 class="notes-detail-title">${note.title}</h2>
             <div class="notes-detail-meta muted">
-              <span class="notes-badge">${isWechat ? "微信公众号" : "External"}</span>
+              <span class="notes-badge">${isWechat ? "微信公众号" : "语雀"}</span>
               ${note.tags && note.tags.length ? `<span class="notes-meta-tags">${note.tags.join(" · ")}</span>` : ""}
             </div>
+            ${isWechat ? `
             <div class="blog-external-card">
               <p class="muted">该文章发布于微信公众号。微信限制第三方站点内嵌，请点击下方按钮在新标签页中阅读原文。</p>
               <a class="btn btn-primary blog-external-btn" href="${safeUrl}" target="_blank" rel="noreferrer">
@@ -303,6 +297,18 @@
                 <span>在新标签页中打开 / Open in new tab</span>
               </a>
             </div>
+            ` : `
+            <p class="muted">语雀文档内嵌预览。若加载异常，可点击下方按钮在新标签页中打开。</p>
+            <div class="blog-external-preview">
+              <iframe src="${safeUrl}" title="${note.title}" class="blog-external-iframe" loading="lazy"></iframe>
+            </div>
+            <p style="margin-top:10px;">
+              <a class="btn btn-primary" href="${safeUrl}" target="_blank" rel="noreferrer">
+                <span class="btn-icon-dot"></span>
+                <span>在新标签页中打开 / Open in new tab</span>
+              </a>
+            </p>
+            `}
           `;
           return;
         }

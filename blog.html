@@ -163,36 +163,23 @@
   </script>
 
   <script>
-    // Blog configuration: Yuque docs and tech schemes only.
-    // type: "external" (Yuque/WeChat link).
+    // Blog configuration: 内嵌语雀文档显示
     const blogTree = [
       {
-        id: "group-yuque",
-        label: "Yuque · 语雀文档 / 技术方案",
+        id: "group-quadruped",
+        label: "Quadruped Robot · 四足机器人",
         children: [
-          {
-            id: "yuque-1",
-            title: "语雀 · 文章一",
-            type: "external",
-            url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/th6do2boncyf3qt4",
-            tags: ["yuque", "notes"],
-          },
-          {
-            id: "yuque-2",
-            title: "语雀 · 文章二",
-            type: "external",
-            url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/vtg9p1zqub32dlvh",
-            tags: ["yuque", "notes"],
-          },
-          {
-            id: "robomaster-tech-scheme",
-            title: "RoboMaster 完整形态技术方案",
-            type: "external",
-            url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/er75cadowlm1agyn",
-            tags: ["RoboMaster", "tech-scheme"],
-          },
-          // 如果你把该技术方案导出为 Markdown 放到 blog/ 目录，例如 blog/RoboMaster/完整形态技术方案.md，
-          // 可以把上面的 external 条目改成 markdown 条目，展示形式与本页其它 md 文章一致。
+          { id: "quad-kinematics", title: "四足机器人运动学分析", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/th6do2boncyf3qt4", tags: ["quadruped", "robotics", "运动学"] },
+          { id: "quad-jacobian", title: "四足机器人雅可比矩阵静力学", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/vtg9p1zqub32dlvh", tags: ["quadruped", "jacobian", "静力学"] },
+          { id: "quad-dynamics", title: "四足机器人动力学分析", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/ksp0tsz40ek7hiis", tags: ["quadruped", "dynamics", "动力学"] },
+        ],
+      },
+      {
+        id: "group-rm-induction",
+        label: "RoboMaster Induction · 新生培训",
+        children: [
+          { id: "rm-induction-first-stage", title: "电控软件新生第一阶段适应性任务", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/sdyxnvko3wlce6ak", tags: ["RoboMaster", "induction"] },
+          { id: "rm-induction-cubemx-git", title: "CubeMx+Git入门-考核", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/dxq8xo98vzscl702", tags: ["RoboMaster", "induction"] },
         ],
       },
     ];
@@ -288,7 +275,7 @@
           setDetail(`
             <h2 class="notes-detail-title">${node.title}</h2>
             <div class="notes-detail-meta muted">
-              <span class="notes-badge">${isWechat ? "微信公众号" : "External"}</span>
+              <span class="notes-badge">${isWechat ? "微信公众号" : "语雀"}</span>
               ${node.tags && node.tags.length ? `<span class="notes-meta-tags">${node.tags.join(" · ")}</span>` : ""}
             </div>
             ${isWechat ? `
@@ -300,14 +287,14 @@
               </a>
             </div>
             ` : `
-            <p class="muted">This article is hosted on an external platform. Below is an inline preview; if it does not load, use the button to open in a new tab.</p>
+            <p class="muted">语雀文档内嵌预览。若加载异常，可点击下方按钮在新标签页中打开。</p>
             <div class="blog-external-preview">
               <iframe src="${safeUrl}" title="${node.title}" class="blog-external-iframe" loading="lazy"></iframe>
             </div>
             <p style="margin-top:10px;">
               <a class="btn btn-primary" href="${safeUrl}" target="_blank" rel="noreferrer">
                 <span class="btn-icon-dot"></span>
-                <span>Open in new tab / 在新标签页中打开</span>
+                <span>在新标签页中打开 / Open in new tab</span>
               </a>
             </p>
             `}
