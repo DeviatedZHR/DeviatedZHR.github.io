@@ -84,10 +84,15 @@
 
   <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
 
-  <!-- Lightweight Markdown renderer -->
+  <!-- Markdown + KaTeX: marked-katex-extension 在解析阶段渲染公式，避免反斜杠被转义 -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5.1.7/lib/index.umd.js"></script>
+  <script>
+    if (window.marked && window.markedKatex) {
+      marked.use(markedKatex({ throwOnError: false, nonStandard: true }));
+    }
+  </script>
 
   <script>
     (function () {
@@ -142,6 +147,11 @@
   </script>
 
   <script>
+    function preprocessMathForBlock(text) {
+      return text.replace(/\$\s*\\begin\{(\w+)\}([\s\S]*?)\\end\{\1\}\s*\$/g, "$$$$\n\\begin{$1}$2\\end{$1}\n$$$$")
+        .replace(/\$\$\s*\\begin\{(\w+)\}([\s\S]*?)\\end\{\1\}\s*\$\$/g, "$$$$\n\\begin{$1}$2\\end{$1}\n$$$$");
+    }
+
     // Notes configuration: grouped structure. type: "markdown" | "external"
     const notesTree = [
       {
@@ -279,18 +289,14 @@
 
         try {
           if (cache.has(note.id)) {
-            const cached = cache.get(note.id);
-            detailInner.innerHTML = cached.html;
-            if (window.renderMathInElement) {
-              const el = detailInner.querySelector(".notes-markdown");
-              if (el) renderMathInElement(el, { delimiters: [{ left: "$$", right: "$$", display: true }, { left: "$", right: "$", display: false }], throwOnError: false });
-            }
+            detailInner.innerHTML = cache.get(note.id).html;
             return;
           }
           const res = await fetch(note.path + "?_=" + Date.now());
           if (!res.ok) throw new Error("Failed to load: " + res.statusText);
           const text = await res.text();
           const basePath = note.path.replace(/\/[^/]+$/, "/");
+          const preprocessed = preprocessMathForBlock(text);
           const opts = {
             gfm: true,
             breaks: true,
@@ -300,7 +306,7 @@
               }
             },
           };
-          const rawHtml = window.marked ? window.marked.parse(text, opts) : "<pre>" + text.replace(/[&<>]/g, s => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[s])) + "</pre>";
+          const rawHtml = window.marked ? window.marked.parse(preprocessed, opts) : "<pre>" + preprocessed.replace(/[&<>]/g, s => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[s])) + "</pre>";
           const html = `
             <h2 class="notes-detail-title">${note.title}</h2>
             <div class="notes-detail-meta muted">
@@ -312,10 +318,6 @@
 
           cache.set(note.id, { text, html });
           detailInner.innerHTML = html;
-          if (window.renderMathInElement) {
-            const el = detailInner.querySelector(".notes-markdown");
-            if (el) renderMathInElement(el, { delimiters: [{ left: "$$", right: "$$", display: true }, { left: "$", right: "$", display: false }], throwOnError: false });
-          }
         } catch (err) {
           console.error(err);
           detailInner.innerHTML = `<p class="muted">加载失败：${err}</p>`;

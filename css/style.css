@@ -1038,6 +1038,11 @@ body.docsify-root #app {
     overflow-y: hidden;
 }
 
+.notes-markdown .katex-error {
+    color: var(--text-muted) !important;
+    background: transparent !important;
+}
+
 /* External link card (WeChat: no iframe, show card + button) */
 .blog-external-card {
     margin-top: 14px;
