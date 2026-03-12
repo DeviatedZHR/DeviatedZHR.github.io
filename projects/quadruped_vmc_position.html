@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Quadruped Robot · 四足机器人 · DeviatedZHR</title>
+  <title>基于VMC和位置控制结合的简易四轮足机器人控制 · DeviatedZHR</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -17,10 +17,7 @@
         </a>
         <div class="nav-links">
           <a href="../index.html" class="nav-link"><span>Home · 首页</span></a>
-          <a href="../about.html" class="nav-link"><span>About · 关于</span></a>
-          <a href="../notes.html" class="nav-link"><span>Notes · 笔记</span></a>
           <a href="../projects.html" class="nav-link nav-link-active"><span>Projects · 项目</span></a>
-          <a href="../cv.html" class="nav-link nav-link-pill"><span>CV &amp; Files · 简历</span></a>
           <a href="../blog.html" class="nav-link"><span>Blog · 博客</span></a>
           <button type="button" class="theme-toggle" id="theme-toggle">
             <span class="theme-toggle-knob"></span>
@@ -35,40 +32,39 @@
         <section class="panel">
           <div class="panel-header">
             <div>
-              <div class="panel-chip">Projects · 项目</div>
-              <h1 class="panel-title">Quadruped Robot · 四足机器人</h1>
+              <div class="panel-chip">Quadruped Robot · 四足机器人</div>
+              <h1 class="panel-title">基于VMC和位置控制结合的简易四轮足机器人控制</h1>
               <p class="panel-subtitle">
-                Legged robot control, gait design, and simulation-to-real transfer.<br>
-                腿足机器人控制、步态设计与仿真到实物的迁移。
+                Simple four-wheeled legged robot control combining VMC (Virtual Model Control) and position control.<br>
+                结合虚拟模型控制（VMC）与位置控制的简易四轮足机器人控制方案。
               </p>
             </div>
           </div>
 
-          <div class="card-list">
-            <article class="card">
-              <div class="card-content">
-                <div class="card-badge-row">
-                  <span class="chip chip-strong">VMC · 虚拟模型控制</span>
-                  <span class="chip">Position control · 位置控制</span>
-                </div>
-                <h2 class="card-title">
-                  <a href="quadruped_vmc_position.html">基于VMC和位置控制结合的简易四轮足机器人控制</a>
-                </h2>
-                <p class="card-meta">
-                  Simple four-wheeled legged robot control combining VMC (Virtual Model Control) and position control.<br>
-                  结合虚拟模型控制（VMC）与位置控制的简易四轮足机器人控制方案。
-                </p>
-                <div class="btn-row">
-                  <a class="btn btn-primary" href="quadruped_vmc_position.html">
-                    <span class="btn-icon-dot"></span>
-                    <span>进入 / Enter</span>
-                  </a>
-                </div>
-              </div>
-            </article>
+          <!-- 1. 学习文档接口 -->
+          <div class="page-section-title">学习文档 · Learning docs</div>
+          <div id="vmc-docs-slot" class="vmc-slot">
+            <p class="muted">
+              将学习文档放入 <code>files/quadruped_vmc_position/</code> 目录，或在此嵌入语雀/外部文档链接。<br>
+              Place learning docs in <code>files/quadruped_vmc_position/</code> or embed Yuque/external docs here.
+            </p>
+            <!-- 接口示例：Markdown 文档渲染 -->
+            <!-- <div id="vmc-docs-content" class="notes-markdown">...</div> -->
+            <!-- 接口示例：语雀 iframe -->
+            <!-- <div class="blog-external-preview"><iframe src="YOUR_YUQUE_URL" class="blog-external-iframe" ...></iframe></div> -->
+          </div>
 
-            <!-- 预留接口：可在此添加更多四足机器人子模块 -->
-            <!-- <article class="card">...</article> -->
+          <!-- 2. 代码接口 -->
+          <div class="page-section-title" style="margin-top: 24px;">代码 · Code</div>
+          <div id="vmc-code-slot" class="vmc-slot">
+            <p class="muted">
+              将代码文件放入 <code>files/quadruped_vmc_position/code/</code> 目录，下方可添加文件链接列表。<br>
+              Place code files in <code>files/quadruped_vmc_position/code/</code> and add links below.
+            </p>
+            <ul class="file-list">
+              <!-- 预留：添加代码文件链接，例如 -->
+              <!-- <li><a href="../files/quadruped_vmc_position/code/xxx.py" download>xxx.py</a> — 描述</li> -->
+            </ul>
           </div>
         </section>
       </div>
@@ -76,7 +72,7 @@
 
     <footer class="page-footer">
       <span>© <span id="year-span"></span> DeviatedZHR.</span>
-      <span class="muted">Quadruped Robot · 四足机器人</span>
+      <span class="muted">VMC + 位置控制 · Four-wheeled legged robot</span>
     </footer>
   </div>
 

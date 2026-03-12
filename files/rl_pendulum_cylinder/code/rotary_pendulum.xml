@@ -1,0 +1,73 @@
+<!-- MuJoCo 模型：旋转倒立摆 -->
+<mujoco model="rotary_inverted_pendulum">
+    <!--
+        编译器设置：
+        - angle="degree"：使用角度作为单位（而不是弧度）
+        - coordinate="local"：关节坐标使用局部坐标系
+        - inertiafromgeom="true"：从几何体自动计算惯性
+    -->
+    <compiler angle="degree" coordinate="local" inertiafromgeom="true"/>
+
+    <!-- 模拟选项：时间步长和重力向量 -->
+    <option timestep="0.01" gravity="0 0 -9.81"/>
+
+    <asset>
+        <!-- 天空盒纹理，用于场景背景渲染 -->
+        <texture type="skybox" builtin="gradient" rgb1=".4 .5 .6" rgb2="0 0 0" width="100" height="100"/>
+    </asset>
+
+    <worldbody>
+        <!-- 光源：位置和方向 -->
+        <light pos="0 0 3" dir="0 0 -1" directional="true"/>
+        <!-- 地面平面几何体，用作视觉参考和碰撞 -->
+        <geom type="plane" size="2 2 0.1" rgba=".9 .9 .9 1"/>
+
+        <!-- 基座：整个装置的固定支撑 -->
+        <body name="base" pos="0 0 0.5">
+            <!-- 基座几何体（圆柱），仅用于显示/碰撞 -->
+            <geom type="cylinder" size="0.1 0.1" rgba=".2 .5 .8 1"/>
+
+            <!-- 臂（旋转部分），相对于基座有一个小偏移 -->
+            <body name="arm" pos="0 0 0.1">
+                <!-- 臂的铰链关节：绕 z 轴旋转，用于控制旋转角度 -->
+                <joint name="arm_joint" type="hinge" axis="0 0 1" damping="0.05"/>
+                <!-- 显式设置臂的惯性以增加臂质量，帮助抑制臂随摆振动 -->
+                <inertial mass="0.6" pos="0 0 0"/>
+                <!-- 臂的几何体（胶囊形），从原点到 0.3m 处 -->
+                <geom type="capsule" fromto="0 0 0  0.3 0 0" size="0.02" rgba=".8 .2 .2 1"/>
+
+                <!-- 倒立杆挂在臂末端 -->
+                <body name="pole" pos="0.3 0 0">
+                    <!--
+                        杆的铰链关节：设置为绕 x 轴（沿臂方向）旋转，
+                        使杆的旋转面始终垂直于臂的方向（随臂一起旋转）。
+                    -->
+                    <joint name="pole_joint" type="hinge" axis="1 0 0" damping="0.04"/>
+                    <!-- 将杆自身质量设小，绝大部分质量放在末端的小球上 -->
+                    <inertial mass="0.05" pos="0 0 0"/>
+                    <!-- 杆的几何体（胶囊），长度约 0.4m -->
+                    <geom type="capsule" fromto="0 0 0  0 0 0.4" size="0.015" rgba=".2 .8 .2 1"/>
+
+                    <!-- 端部重球：固连在杆末端（pos=0 0 0.4），大部分质量集中于此 -->
+                    <body name="ball" pos="0 0 0.4">
+                        <inertial mass="0.45" pos="0 0 0"/>
+                        <geom type="sphere" size="0.04" rgba=".9 .6 .2 1"/>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </worldbody>
+
+    <actuator>
+        <!-- 臂驱动电机：连接到 `arm_joint`，并限制控制输入范围 -->
+        <motor joint="arm_joint" name="arm_motor" gear="1" ctrllimited="true" ctrlrange="-50 50"/>
+    </actuator>
+
+    <sensor>
+        <!-- 传感器：测量关节位置与速度，便于控制器读取 -->
+        <jointpos joint="arm_joint" name="arm_pos"/>
+        <jointpos joint="pole_joint" name="pole_pos"/>
+        <jointvel joint="arm_joint" name="arm_vel"/>
+        <jointvel joint="pole_joint" name="pole_vel"/>
+    </sensor>
+</mujoco>

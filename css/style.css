@@ -1132,3 +1132,24 @@ body.docsify-root #app {
         padding-inline: 14px;
     }
 }
+
+/* 项目页面文件列表 */
+.file-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+}
+.file-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+.file-list li:last-child {
+    border-bottom: none;
+}
+.file-list a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+.file-list a:hover {
+    text-decoration: underline;
+}
