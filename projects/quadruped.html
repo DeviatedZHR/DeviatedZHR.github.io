@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Quadruped Robot · 四足机器人 · DeviatedZHR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body data-theme="dark">
+  <div class="page-shell">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-brand">
+          <span class="nav-brand-mark"><span></span></span>
+          <span>DeviatedZHR</span>
+        </a>
+        <div class="nav-links">
+          <a href="../index.html" class="nav-link"><span>Home · 首页</span></a>
+          <a href="../about.html" class="nav-link"><span>About · 关于</span></a>
+          <a href="../notes.html" class="nav-link"><span>Notes · 笔记</span></a>
+          <a href="../projects.html" class="nav-link nav-link-active"><span>Projects · 项目</span></a>
+          <a href="../cv.html" class="nav-link nav-link-pill"><span>CV &amp; Files · 简历</span></a>
+          <a href="../blog.html" class="nav-link"><span>Blog · 博客</span></a>
+          <button type="button" class="theme-toggle" id="theme-toggle">
+            <span class="theme-toggle-knob"></span>
+            <span class="theme-toggle-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div class="page-inner page-inner-wide">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-chip">Projects · 项目</div>
+              <h1 class="panel-title">Quadruped Robot · 四足机器人</h1>
+              <p class="panel-subtitle">
+                Legged robot control, gait design, and simulation-to-real transfer.<br>
+                腿足机器人控制、步态设计与仿真到实物的迁移。
+              </p>
+            </div>
+          </div>
+
+          <!-- 内容接口：后续可在此区域添加四足机器人相关内容 -->
+          <div id="quadruped-content-slot" class="quadruped-content-slot">
+            <p class="muted">
+              内容待补充。可在此区域插入：项目介绍、技术文档、仿真/实物演示等。<br>
+              Content to be added. You can insert: project intro, technical docs, simulation/real-world demos, etc.
+            </p>
+            <!-- 预留接口示例：可替换为实际内容块 -->
+            <!-- <div class="page-section-title">项目概述 · Overview</div> -->
+            <!-- <div class="page-section-title">技术文档 · Docs</div> -->
+            <!-- <div class="page-section-title">演示 · Demos</div> -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <span>© <span id="year-span"></span> DeviatedZHR.</span>
+      <span class="muted">Quadruped Robot · 四足机器人</span>
+    </footer>
+  </div>
+
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <script>
+    (function () {
+      const root = document.body;
+      const storedTheme = window.localStorage.getItem("dzhr-theme");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        root.setAttribute("data-theme", storedTheme);
+      }
+
+      const toggle = document.getElementById("theme-toggle");
+      const label = toggle ? toggle.querySelector(".theme-toggle-label") : null;
+
+      function currentTheme() {
+        return root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        if (label) {
+          label.textContent = theme === "light" ? "Light" : "Dark";
+        }
+        window.localStorage.setItem("dzhr-theme", theme);
+      }
+
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const next = currentTheme() === "light" ? "dark" : "light";
+          applyTheme(next);
+        });
+        applyTheme(currentTheme());
+      }
+
+      const scrollTop = document.getElementById("scroll-top");
+      if (scrollTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 160) {
+            scrollTop.classList.add("scroll-top-visible");
+          } else {
+            scrollTop.classList.remove("scroll-top-visible");
+          }
+        });
+        scrollTop.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
+      const yearSpan = document.getElementById("year-span");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
+</body>
+</html>

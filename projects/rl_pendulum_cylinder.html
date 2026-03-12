@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>圆柱倒立摆的强化学习控制 · DeviatedZHR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body data-theme="dark">
+  <div class="page-shell">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-brand">
+          <span class="nav-brand-mark"><span></span></span>
+          <span>DeviatedZHR</span>
+        </a>
+        <div class="nav-links">
+          <a href="../index.html" class="nav-link"><span>Home · 首页</span></a>
+          <a href="../projects.html" class="nav-link nav-link-active"><span>Projects · 项目</span></a>
+          <a href="../blog.html" class="nav-link"><span>Blog · 博客</span></a>
+          <button type="button" class="theme-toggle" id="theme-toggle">
+            <span class="theme-toggle-knob"></span>
+            <span class="theme-toggle-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div class="page-inner page-inner-wide">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-chip">Reinforcement Learning · 强化学习</div>
+              <h1 class="panel-title">圆柱倒立摆的强化学习控制</h1>
+              <p class="panel-subtitle">
+                RL-based swing-up and stabilization for inverted pendulum on cylinder, with MuJoCo simulation.<br>
+                基于强化学习的圆柱倒立摆起摆与平衡控制，含 MuJoCo 仿真演示。
+              </p>
+            </div>
+          </div>
+
+          <!-- 1. 学习文档接口：将学习文档路径填入下方，或替换为内嵌语雀/iframe -->
+          <div class="page-section-title">学习文档 · Learning docs</div>
+          <div id="rl-pendulum-docs-slot" class="rl-pendulum-slot">
+            <p class="muted">
+              将学习文档放入 <code>files/rl_pendulum_cylinder/</code> 目录，或在此嵌入语雀/外部文档链接。<br>
+              Place learning docs in <code>files/rl_pendulum_cylinder/</code> or embed Yuque/external docs here.
+            </p>
+            <!-- 接口示例：内嵌语雀 iframe -->
+            <!-- <div class="blog-external-preview"><iframe src="YOUR_YUQUE_URL" class="blog-external-iframe" ...></iframe></div> -->
+          </div>
+
+          <!-- 2. 代码接口：将代码仓库链接或本地代码路径填入 -->
+          <div class="page-section-title" style="margin-top: 24px;">代码 · Code</div>
+          <div id="rl-pendulum-code-slot" class="rl-pendulum-slot">
+            <p class="muted">
+              将代码仓库链接或本地代码路径填入此处。例如：<br>
+              Add repo link or local code path here. E.g.:
+            </p>
+            <ul class="muted">
+              <li><code>files/rl_pendulum_cylinder/code/</code> — 本地代码目录</li>
+              <li><a href="#">GitHub / Gitee 仓库链接</a></li>
+            </ul>
+          </div>
+
+          <!-- 3. Demo 展示接口：MuJoCo 仿真演示 -->
+          <div class="page-section-title" style="margin-top: 24px;">Demo 展示 · MuJoCo simulation</div>
+          <div id="rl-pendulum-demo-slot" class="rl-pendulum-slot">
+            <p class="muted">
+              将 MuJoCo 仿真演示放入此处。可嵌入：<br>
+              Place MuJoCo simulation demo here. You can embed:
+            </p>
+            <ul class="muted">
+              <li>视频文件路径：<code>files/rl_pendulum_cylinder/demo.mp4</code></li>
+              <li>MuJoCo viewer 导出 HTML（若支持）</li>
+              <li>或外部演示链接</li>
+            </ul>
+            <!-- 接口示例：视频 -->
+            <!-- <video src="files/rl_pendulum_cylinder/demo.mp4" controls style="max-width:100%; border-radius:8px;"></video> -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <span>© <span id="year-span"></span> DeviatedZHR.</span>
+      <span class="muted">圆柱倒立摆 · Inverted pendulum on cylinder</span>
+    </footer>
+  </div>
+
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <script>
+    (function () {
+      const root = document.body;
+      const storedTheme = window.localStorage.getItem("dzhr-theme");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        root.setAttribute("data-theme", storedTheme);
+      }
+
+      const toggle = document.getElementById("theme-toggle");
+      const label = toggle ? toggle.querySelector(".theme-toggle-label") : null;
+
+      function currentTheme() {
+        return root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        if (label) {
+          label.textContent = theme === "light" ? "Light" : "Dark";
+        }
+        window.localStorage.setItem("dzhr-theme", theme);
+      }
+
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const next = currentTheme() === "light" ? "dark" : "light";
+          applyTheme(next);
+        });
+        applyTheme(currentTheme());
+      }
+
+      const scrollTop = document.getElementById("scroll-top");
+      if (scrollTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 160) {
+            scrollTop.classList.add("scroll-top-visible");
+          } else {
+            scrollTop.classList.remove("scroll-top-visible");
+          }
+        });
+        scrollTop.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
+      const yearSpan = document.getElementById("year-span");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
+</body>
+</html>

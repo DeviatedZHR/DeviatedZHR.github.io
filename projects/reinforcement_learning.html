@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Reinforcement Learning · 强化学习 · DeviatedZHR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body data-theme="dark">
+  <div class="page-shell">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-brand">
+          <span class="nav-brand-mark"><span></span></span>
+          <span>DeviatedZHR</span>
+        </a>
+        <div class="nav-links">
+          <a href="../index.html" class="nav-link"><span>Home · 首页</span></a>
+          <a href="../about.html" class="nav-link"><span>About · 关于</span></a>
+          <a href="../notes.html" class="nav-link"><span>Notes · 笔记</span></a>
+          <a href="../projects.html" class="nav-link nav-link-active"><span>Projects · 项目</span></a>
+          <a href="../cv.html" class="nav-link nav-link-pill"><span>CV &amp; Files · 简历</span></a>
+          <a href="../blog.html" class="nav-link"><span>Blog · 博客</span></a>
+          <button type="button" class="theme-toggle" id="theme-toggle">
+            <span class="theme-toggle-knob"></span>
+            <span class="theme-toggle-label">Dark</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <div class="page-inner page-inner-wide">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-chip">Projects · 项目</div>
+              <h1 class="panel-title">Reinforcement Learning · 强化学习</h1>
+              <p class="panel-subtitle">
+                RL-based control for classic systems: inverted pendulum, cart-pole, etc.<br>
+                基于强化学习的经典系统控制：倒立摆、小车摆等。
+              </p>
+            </div>
+          </div>
+
+          <div class="card-list">
+            <article class="card">
+              <div class="card-content">
+                <div class="card-badge-row">
+                  <span class="chip chip-strong">MuJoCo</span>
+                  <span class="chip">Inverted pendulum on cylinder</span>
+                </div>
+                <h2 class="card-title">
+                  <a href="rl_pendulum_cylinder.html">圆柱倒立摆的强化学习控制</a>
+                </h2>
+                <p class="card-meta">
+                  RL control for inverted pendulum on a cylinder. Includes learning docs, code, and MuJoCo demo.<br>
+                  圆柱上的倒立摆强化学习控制，包含学习文档、代码与 MuJoCo 仿真演示。
+                </p>
+                <div class="btn-row">
+                  <a class="btn btn-primary" href="rl_pendulum_cylinder.html">
+                    <span class="btn-icon-dot"></span>
+                    <span>进入 / Enter</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- 预留接口：可在此添加更多强化学习子模块 -->
+            <!-- <article class="card">...</article> -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <span>© <span id="year-span"></span> DeviatedZHR.</span>
+      <span class="muted">Reinforcement Learning · 强化学习</span>
+    </footer>
+  </div>
+
+  <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+  <script>
+    (function () {
+      const root = document.body;
+      const storedTheme = window.localStorage.getItem("dzhr-theme");
+      if (storedTheme === "light" || storedTheme === "dark") {
+        root.setAttribute("data-theme", storedTheme);
+      }
+
+      const toggle = document.getElementById("theme-toggle");
+      const label = toggle ? toggle.querySelector(".theme-toggle-label") : null;
+
+      function currentTheme() {
+        return root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        if (label) {
+          label.textContent = theme === "light" ? "Light" : "Dark";
+        }
+        window.localStorage.setItem("dzhr-theme", theme);
+      }
+
+      if (toggle) {
+        toggle.addEventListener("click", function () {
+          const next = currentTheme() === "light" ? "dark" : "light";
+          applyTheme(next);
+        });
+        applyTheme(currentTheme());
+      }
+
+      const scrollTop = document.getElementById("scroll-top");
+      if (scrollTop) {
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 160) {
+            scrollTop.classList.add("scroll-top-visible");
+          } else {
+            scrollTop.classList.remove("scroll-top-visible");
+          }
+        });
+        scrollTop.addEventListener("click", function () {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+
+      const yearSpan = document.getElementById("year-span");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+    })();
+  </script>
+</body>
+</html>

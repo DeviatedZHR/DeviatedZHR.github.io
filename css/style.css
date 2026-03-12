@@ -280,8 +280,8 @@ body {
 
 .home-avatar-wrap .avatar-circle,
 .home-avatar {
-    width: 140px;
-    height: 140px;
+    width: 200px;
+    height: 200px;
     flex-shrink: 0;
 }
 

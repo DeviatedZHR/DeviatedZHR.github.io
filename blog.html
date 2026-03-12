@@ -37,11 +37,11 @@
         <section class="panel">
           <div class="panel-header">
             <div>
-              <div class="panel-chip">Blog · 博客与文章</div>
-              <h1 class="panel-title">Yuque docs &amp; tech schemes · 语雀文档与技术方案</h1>
+              <div class="panel-chip">Blog · 博客</div>
+              <h1 class="panel-title">完整形态技术方案 · Full-shape technical scheme</h1>
               <p class="panel-subtitle">
-                Yuque-style two-pane layout: folders and links on the left, content preview on the right.<br>
-                语雀风格双栏布局：左侧分组与链接，右侧内容预览。
+                RoboMaster 完整形态技术方案，内嵌语雀文档展示（与 Notes 一致）。<br>
+                RoboMaster full-shape technical scheme, embedded Yuque doc (same layout as Notes).
               </p>
             </div>
           </div>
@@ -163,23 +163,13 @@
   </script>
 
   <script>
-    // Blog configuration: 内嵌语雀文档显示
+    // Blog configuration: 仅保留完整形态技术方案，内嵌语雀显示（与 Notes 一致）
     const blogTree = [
       {
-        id: "group-quadruped",
-        label: "Quadruped Robot · 四足机器人",
+        id: "group-blog",
+        label: "Blog · 博客",
         children: [
-          { id: "quad-kinematics", title: "四足机器人运动学分析", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/th6do2boncyf3qt4", tags: ["quadruped", "robotics", "运动学"] },
-          { id: "quad-jacobian", title: "四足机器人雅可比矩阵静力学", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/vtg9p1zqub32dlvh", tags: ["quadruped", "jacobian", "静力学"] },
-          { id: "quad-dynamics", title: "四足机器人动力学分析", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/ksp0tsz40ek7hiis", tags: ["quadruped", "dynamics", "动力学"] },
-        ],
-      },
-      {
-        id: "group-rm-induction",
-        label: "RoboMaster Induction · 新生培训",
-        children: [
-          { id: "rm-induction-first-stage", title: "电控软件新生第一阶段适应性任务", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/sdyxnvko3wlce6ak", tags: ["RoboMaster", "induction"] },
-          { id: "rm-induction-cubemx-git", title: "CubeMx+Git入门-考核", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/dxq8xo98vzscl702", tags: ["RoboMaster", "induction"] },
+          { id: "robomaster-tech-scheme", title: "完整形态技术方案", type: "external", url: "https://www.yuque.com/zhanghaoran-oj9sd/vrbogm/er75cadowlm1agyn", tags: ["RoboMaster", "tech-scheme"] },
         ],
       },
     ];
@@ -401,13 +391,16 @@
 
       // URL hash: #post=xxx
       const hashMatch = location.hash.match(/post=([^&]+)/);
+      const allNodes = flattenNodes(blogTree);
       if (hashMatch) {
         const idFromHash = decodeURIComponent(hashMatch[1]);
-        const allNodes = flattenNodes(blogTree);
         const node = allNodes.find(n => n.id === idFromHash);
         if (node) {
           openNode(node);
         }
+      } else if (allNodes.length === 1) {
+        // 仅有一篇时自动打开
+        openNode(allNodes[0]);
       }
 
       treeContainer.addEventListener("click", function (e) {
